@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7pnwbqqowy76"]
+
+[ext_resource type="Script" uid="uid://biwfi4kofofgs" path="res://UI/scripts/ui_card.gd" id="1_r2t7u"]
+
+[node name="UiCard" type="TextureButton"]
+script = ExtResource("1_r2t7u")

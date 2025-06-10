@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://b64rsbjac0d0v"]
+
+[ext_resource type="Texture2D" uid="uid://ca6wk2yw54qb3" path="res://assets/backgrounds/meatBG.png" id="1_817cp"]
+[ext_resource type="Texture2D" uid="uid://l7d7hmlkon8u" path="res://assets/elements/USER INFO.png" id="2_lxxma"]
+[ext_resource type="Texture2D" uid="uid://bie6e4iv5f4v7" path="res://assets/elements/AI info.png" id="3_14ic4"]
+[ext_resource type="Script" uid="uid://bdq3la7c8g1hc" path="res://UI/scripts/grid_container.gd" id="4_14ic4"]
+[ext_resource type="PackedScene" uid="uid://dsmfuv5hfxmu1" path="res://UI/scenes/UICardPlaceholder.tscn" id="5_dw1iw"]
+
+[node name="Meat" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.998252, 0.91235)
+
+[node name="bg" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 10192.0
+offset_bottom = 6795.0
+scale = Vector2(0.113121, 0.113121)
+texture = ExtResource("1_817cp")
+
+[node name="USER INFO" type="TextureRect" parent="bg"]
+layout_mode = 0
+offset_left = 283.378
+offset_top = 5503.56
+offset_right = 2622.38
+offset_bottom = 6440.56
+texture = ExtResource("2_lxxma")
+
+[node name="AI INFO" type="TextureRect" parent="bg"]
+layout_mode = 0
+offset_left = 7549.44
+offset_top = 300.563
+offset_right = 10024.4
+offset_bottom = 1237.56
+scale = Vector2(0.948341, 0.948341)
+texture = ExtResource("3_14ic4")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -511.0
+offset_top = -210.0
+offset_right = 511.0
+offset_bottom = 265.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer"]
+layout_mode = 2
+columns = 4
+script = ExtResource("4_14ic4")
+
+[node name="UiCardPlaceholder" parent="MarginContainer/GridContainer" instance=ExtResource("5_dw1iw")]
+layout_mode = 2

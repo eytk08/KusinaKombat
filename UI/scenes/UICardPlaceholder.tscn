@@ -1,0 +1,80 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsmfuv5hfxmu1"]
+
+[ext_resource type="Script" uid="uid://d4eg6hf3d8cll" path="res://UI/scripts/ui_card_placeholder.gd" id="1_532yl"]
+[ext_resource type="Texture2D" uid="uid://tkci3r7mwbi4" path="res://assets/elements/meat_Placeholder.png" id="2_ddei6"]
+
+[node name="UiCardPlaceholder" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_532yl")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1216.0
+offset_bottom = 1191.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_ddei6")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 4.0
+offset_right = 1456.0
+offset_bottom = 1195.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_ddei6")
+
+[node name="TextureRect9" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 494.0
+offset_top = 2.0
+offset_right = 1710.0
+offset_bottom = 1193.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_ddei6")
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1216.0
+offset_bottom = 1191.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_ddei6")
+
+[node name="TextureRect4" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1216.0
+offset_bottom = 1191.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_ddei6")
+
+[node name="TextureRect5" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1216.0
+offset_bottom = 1191.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_ddei6")
+
+[node name="TextureRect6" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1216.0
+offset_bottom = 1191.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_ddei6")
+
+[node name="TextureRect7" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1216.0
+offset_bottom = 1191.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_ddei6")
+
+[node name="TextureRect8" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1216.0
+offset_bottom = 1191.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_ddei6")

@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://5pwgxjjn7lah"]
+
+[ext_resource type="Shader" uid="uid://nl4sqnxpc7hc" path="res://UI/glow_shader.gdshader" id="1_4i7ar"]
+
+[resource]
+shader = ExtResource("1_4i7ar")
+shader_parameter/outline_color = Color(1, 0.85, 0, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/selected = false

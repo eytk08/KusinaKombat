@@ -1,0 +1,89 @@
+[gd_scene load_steps=10 format=3 uid="uid://eofc7tt445og"]
+
+[ext_resource type="Script" uid="uid://bekpbrd43jpow" path="res://UI/scripts/categories.gd" id="1_mftb7"]
+[ext_resource type="Texture2D" uid="uid://td0r8yxsmmk4" path="res://assets/backgrounds/woodBG.png" id="1_qmeva"]
+[ext_resource type="Texture2D" uid="uid://dwrrfi3hn208y" path="res://assets/elements/lb.png" id="2_qntn7"]
+[ext_resource type="Texture2D" uid="uid://cpn8im7weetmt" path="res://assets/elements/handaan.png" id="3_mftb7"]
+[ext_resource type="Texture2D" uid="uid://d1obetmcfmt4q" path="res://assets/elements/agahan.png" id="4_td2lu"]
+[ext_resource type="Texture2D" uid="uid://cxxpkkpsh06jw" path="res://assets/elements/pulutan.png" id="5_5gq7i"]
+[ext_resource type="Texture2D" uid="uid://ckx7kunxhc1a2" path="res://assets/elements/gulay.png" id="6_2jdch"]
+[ext_resource type="Texture2D" uid="uid://k3raqpcxq0d1" path="res://assets/buttons/nextB.png" id="7_d8c1v"]
+[ext_resource type="Script" uid="uid://j45wc2f6lncc" path="res://UI/scripts/texture_button.gd" id="8_spjaf"]
+
+[node name="Categories" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mftb7")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -2.0
+offset_right = 1157.0
+offset_bottom = 701.0
+scale = Vector2(0.995563, 0.997508)
+texture = ExtResource("1_qmeva")
+expand_mode = 1
+
+[node name="lb" type="TextureRect" parent="TextureRect"]
+layout_mode = 0
+offset_left = 87.3878
+offset_top = 90.2248
+offset_right = 3984.39
+offset_bottom = 3112.22
+scale = Vector2(0.140617, 0.131576)
+texture = ExtResource("2_qntn7")
+
+[node name="handaan" type="TextureRect" parent="TextureRect"]
+layout_mode = 0
+offset_left = 665.955
+offset_top = 90.2248
+offset_right = 2019.95
+offset_bottom = 1989.22
+scale = Vector2(0.130553, 0.130553)
+texture = ExtResource("3_mftb7")
+
+[node name="agahan" type="TextureRect" parent="TextureRect"]
+layout_mode = 0
+offset_left = 882.918
+offset_top = 90.2248
+offset_right = 2236.92
+offset_bottom = 1989.22
+scale = Vector2(0.130268, 0.130268)
+texture = ExtResource("4_td2lu")
+
+[node name="pulutan" type="TextureRect" parent="TextureRect"]
+layout_mode = 0
+offset_left = 665.955
+offset_top = 362.904
+offset_right = 2019.95
+offset_bottom = 2261.9
+scale = Vector2(0.129677, 0.129677)
+texture = ExtResource("5_5gq7i")
+
+[node name="gulay" type="TextureRect" parent="TextureRect"]
+layout_mode = 0
+offset_left = 882.918
+offset_top = 362.904
+offset_right = 2236.92
+offset_bottom = 2261.9
+scale = Vector2(0.128438, 0.128438)
+texture = ExtResource("6_2jdch")
+
+[node name="nextB" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 534.0
+offset_top = 501.0
+offset_right = 3173.0
+offset_bottom = 3097.0
+scale = Vector2(0.0375726, 0.0391842)
+texture_normal = ExtResource("7_d8c1v")
+script = ExtResource("8_spjaf")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
