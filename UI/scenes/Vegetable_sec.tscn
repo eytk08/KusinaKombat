@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4eo5xwwbpob0"]
+
+[ext_resource type="PackedScene" uid="uid://gk36p27y2dec" path="res://UI/scenes/baseUI.tscn" id="1_2cwsl"]
+[ext_resource type="Texture2D" uid="uid://b636ubquj3xjx" path="res://assets/backgrounds/marketBG (1).png" id="2_rnwky"]
+[ext_resource type="PackedScene" uid="uid://bay6ndcwm3bsj" path="res://UI/scenes/UICardPlaceholderv.tscn" id="3_gr8wc"]
+
+[node name="BaseUi" instance=ExtResource("1_2cwsl")]
+
+[node name="bg" parent="." index="0"]
+offset_bottom = 6179.0
+texture = ExtResource("2_rnwky")
+
+[node name="TextureButton" parent="bg" index="2"]
+scale = Vector2(0.18639, 0.18639)
+
+[node name="MarginContainer" type="MarginContainer" parent="." index="1"]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 145.0
+offset_right = 1088.0
+offset_bottom = 544.0
+
+[node name="UiCardPlaceholderv" parent="MarginContainer" index="0" instance=ExtResource("3_gr8wc")]
+layout_mode = 2

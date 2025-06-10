@@ -1,10 +1,12 @@
 [gd_scene load_steps=6 format=3 uid="uid://b64rsbjac0d0v"]
 
 [ext_resource type="Texture2D" uid="uid://ca6wk2yw54qb3" path="res://assets/backgrounds/meatBG.png" id="1_817cp"]
-[ext_resource type="Texture2D" uid="uid://l7d7hmlkon8u" path="res://assets/elements/USER INFO.png" id="2_lxxma"]
+[ext_resource type="FontFile" uid="uid://dvm3m0ux7d4n0" path="res://assets/elements/PixelifySans-Medium.ttf" id="3_2qo63"]
 [ext_resource type="Texture2D" uid="uid://bie6e4iv5f4v7" path="res://assets/elements/AI info.png" id="3_14ic4"]
-[ext_resource type="Script" uid="uid://bdq3la7c8g1hc" path="res://UI/scripts/grid_container.gd" id="4_14ic4"]
-[ext_resource type="PackedScene" uid="uid://dsmfuv5hfxmu1" path="res://UI/scenes/UICardPlaceholder.tscn" id="5_dw1iw"]
+[ext_resource type="PackedScene" uid="uid://dsmfuv5hfxmu1" path="res://UI/scenes/UICardPlaceholderm.tscn" id="5_dw1iw"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_14ic4"]
+load_path = "res://.godot/imported/USER INFO.png-f0717f484c58002aac77d3a8a1eb1e47.ctex"
 
 [node name="Meat" type="Control"]
 layout_mode = 3
@@ -28,7 +30,26 @@ offset_left = 283.378
 offset_top = 5503.56
 offset_right = 2622.38
 offset_bottom = 6440.56
-texture = ExtResource("2_lxxma")
+texture = SubResource("CompressedTexture2D_14ic4")
+
+[node name="Label" type="Label" parent="bg/USER INFO"]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.196
+anchor_top = 0.596
+anchor_right = 0.196
+anchor_bottom = 0.596
+offset_left = -121.932
+offset_top = -219.325
+offset_right = 85.0676
+offset_bottom = 200.675
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.908204, 0.923676, 1)
+theme_override_fonts/font = ExtResource("3_2qo63")
+theme_override_font_sizes/font_size = 450
+text = "6"
 
 [node name="AI INFO" type="TextureRect" parent="bg"]
 layout_mode = 0
@@ -39,24 +60,34 @@ offset_bottom = 1237.56
 scale = Vector2(0.948341, 0.948341)
 texture = ExtResource("3_14ic4")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Label" type="Label" parent="bg/AI INFO"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -511.0
-offset_top = -210.0
-offset_right = 511.0
-offset_bottom = 265.0
+anchors_preset = -1
+anchor_left = 0.798
+anchor_top = 0.518
+anchor_right = 0.798
+anchor_bottom = 0.518
+offset_left = -102.858
+offset_top = -209.706
+offset_right = 104.142
+offset_bottom = 210.295
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.914468, 0.879417, 1)
+theme_override_fonts/font = ExtResource("3_2qo63")
+theme_override_font_sizes/font_size = 450
+text = "7"
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer"]
-layout_mode = 2
-columns = 4
-script = ExtResource("4_14ic4")
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0720532
+anchor_top = 0.2
+anchor_right = 0.928824
+anchor_bottom = 0.878571
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="UiCardPlaceholder" parent="MarginContainer/GridContainer" instance=ExtResource("5_dw1iw")]
+[node name="UiCardPlaceholder" parent="MarginContainer" instance=ExtResource("5_dw1iw")]
 layout_mode = 2

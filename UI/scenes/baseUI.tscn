@@ -1,0 +1,81 @@
+[gd_scene load_steps=5 format=3 uid="uid://gk36p27y2dec"]
+
+[ext_resource type="FontFile" uid="uid://dvm3m0ux7d4n0" path="res://assets/elements/PixelifySans-Medium.ttf" id="1_fsnff"]
+[ext_resource type="Texture2D" uid="uid://bie6e4iv5f4v7" path="res://assets/elements/AI info.png" id="2_buge4"]
+[ext_resource type="Texture2D" uid="uid://d2mh0e31u18qv" path="res://assets/buttons/settingsB.png" id="3_buge4"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2b0gx"]
+load_path = "res://.godot/imported/USER INFO.png-f0717f484c58002aac77d3a8a1eb1e47.ctex"
+
+[node name="BaseUi" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="bg" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 10192.0
+offset_bottom = 6170.0
+scale = Vector2(0.113121, 0.113121)
+
+[node name="USER INFO" type="TextureRect" parent="bg"]
+layout_mode = 0
+offset_left = 433.164
+offset_top = 4906.25
+offset_right = 2772.17
+offset_bottom = 5843.25
+texture = SubResource("CompressedTexture2D_2b0gx")
+
+[node name="Label" type="Label" parent="bg/USER INFO"]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.196
+anchor_top = 0.596
+anchor_right = 0.196
+anchor_bottom = 0.596
+offset_left = -121.932
+offset_top = -219.325
+offset_right = 85.0676
+offset_bottom = 200.675
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.908204, 0.923676, 1)
+theme_override_fonts/font = ExtResource("1_fsnff")
+theme_override_font_sizes/font_size = 450
+text = "6"
+
+[node name="AI INFO" type="TextureRect" parent="bg"]
+layout_mode = 0
+offset_left = 7549.44
+offset_top = 300.563
+offset_right = 10024.4
+offset_bottom = 1237.56
+scale = Vector2(0.948341, 0.948341)
+texture = ExtResource("2_buge4")
+
+[node name="Label" type="Label" parent="bg/AI INFO"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.798
+anchor_top = 0.518
+anchor_right = 0.798
+anchor_bottom = 0.518
+offset_left = -102.858
+offset_top = -209.706
+offset_right = 104.142
+offset_bottom = 210.295
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.914468, 0.879417, 1)
+theme_override_fonts/font = ExtResource("1_fsnff")
+theme_override_font_sizes/font_size = 450
+text = "7"
+
+[node name="TextureButton" type="TextureButton" parent="bg"]
+layout_mode = 0
+offset_left = 548.086
+offset_top = 353.604
+offset_right = 3627.09
+offset_bottom = 3552.6
+scale = Vector2(0.18639, 0.18639)
+texture_normal = ExtResource("3_buge4")

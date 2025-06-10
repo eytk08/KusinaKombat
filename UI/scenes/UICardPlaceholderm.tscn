@@ -1,0 +1,87 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsmfuv5hfxmu1"]
+
+[ext_resource type="Script" uid="uid://d4eg6hf3d8cll" path="res://UI/scripts/ui_card_placeholder.gd" id="1_16kh8"]
+[ext_resource type="Texture2D" uid="uid://tkci3r7mwbi4" path="res://assets/elements/meat_Placeholder.png" id="2_neqxl"]
+
+[node name="UiCardPlaceholder" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -164.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_16kh8")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 20.0
+offset_right = 1472.0
+offset_bottom = 1211.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_neqxl")
+stretch_mode = 2
+
+[node name="TextureRect9" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 2.00002
+offset_top = 20.0
+offset_right = 1218.0
+offset_bottom = 1211.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_neqxl")
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 513.0
+offset_top = 21.0
+offset_right = 1729.0
+offset_bottom = 1212.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_neqxl")
+
+[node name="TextureRect4" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 768.0
+offset_top = 22.0
+offset_right = 1984.0
+offset_bottom = 1213.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_neqxl")
+
+[node name="TextureRect5" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 254.0
+offset_right = 1217.0
+offset_bottom = 1445.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_neqxl")
+
+[node name="TextureRect6" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 257.0
+offset_top = 253.0
+offset_right = 1473.0
+offset_bottom = 1444.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_neqxl")
+
+[node name="TextureRect7" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 514.0
+offset_top = 254.0
+offset_right = 1730.0
+offset_bottom = 1445.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_neqxl")
+
+[node name="TextureRect8" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 769.0
+offset_top = 255.0
+offset_right = 1985.0
+offset_bottom = 1446.0
+scale = Vector2(0.180602, 0.176526)
+texture = ExtResource("2_neqxl")
