@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://dd827lfbe6hsv"]
+
+[ext_resource type="Texture2D" uid="uid://uimhp4m4tmrt" path="res://assets/elements/settings.png" id="1_r7321"]
+[ext_resource type="Texture2D" uid="uid://c22y2k7vx5nx5" path="res://assets/buttons/inquiryB.png" id="2_l31ti"]
+[ext_resource type="Texture2D" uid="uid://c5jd0pa3vr2cf" path="res://assets/buttons/backB.png" id="3_jkm6y"]
+[ext_resource type="Texture2D" uid="uid://co4vypp45lbjb" path="res://assets/buttons/cardsB.png" id="4_7u0ur"]
+[ext_resource type="Texture2D" uid="uid://cj5kagv0urojf" path="res://assets/buttons/musicB.png" id="5_ndpio"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -2.30642
+anchor_top = -2.70857
+anchor_right = 3.30767
+anchor_bottom = 3.70684
+offset_left = 2897.0
+offset_top = 2016.0
+offset_right = 3375.56
+offset_bottom = 2257.22
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.0969537, 0.0969537)
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+texture = ExtResource("1_r7321")
+
+[node name="htpB" type="TextureButton" parent="."]
+offset_left = 592.0
+offset_top = 272.0
+offset_right = 3854.0
+offset_bottom = 3471.0
+scale = Vector2(0.0199907, 0.0199907)
+texture_normal = ExtResource("2_l31ti")
+
+[node name="backB" type="TextureButton" parent="."]
+layout_mode = 2
+offset_left = 468.0
+offset_top = 464.0
+offset_right = 1943.0
+offset_bottom = 902.0
+scale = Vector2(0.149832, 0.149832)
+texture_normal = ExtResource("3_jkm6y")
+
+[node name="cardsB" type="TextureButton" parent="."]
+layout_mode = 2
+offset_left = 467.0
+offset_top = 387.0
+offset_right = 1940.0
+offset_bottom = 824.0
+scale = Vector2(0.150883, 0.150883)
+texture_normal = ExtResource("4_7u0ur")
+
+[node name="musicB" type="TextureButton" parent="."]
+layout_mode = 2
+offset_left = 496.0
+offset_top = 272.0
+offset_right = 3559.0
+offset_bottom = 3471.0
+scale = Vector2(0.0199907, 0.0199907)
+texture_normal = ExtResource("5_ndpio")

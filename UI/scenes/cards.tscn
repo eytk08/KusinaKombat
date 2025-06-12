@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3n84sxb6i8rj"]
+
+[ext_resource type="Texture2D" uid="uid://td0r8yxsmmk4" path="res://assets/backgrounds/woodBG.png" id="1_h14qy"]
+
+[node name="Cards" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.145662, 0.145134)
+texture = ExtResource("1_h14qy")
+
+[node name="CenterContainer" type="CenterContainer" parent="TextureRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/CenterContainer"]
+layout_mode = 2

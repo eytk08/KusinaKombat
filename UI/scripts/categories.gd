@@ -3,7 +3,7 @@ extends Node
 @export var initial_delay: float = 0.3
 @export var selection_speed: float = 0.2
 @export var speed_decrease_rate: float = 0.005
-@export var final_selection_delay: float = 1.1
+@export var final_selection_delay: float = 0.1
 @export var cycles: int = 4
 
 var elements: Array[TextureRect] = []
@@ -93,7 +93,7 @@ func _next_selection():
 		return
 	
 	# Adjust speed (slow down over time)
-	current_speed = max(current_speed - speed_decrease_rate, 0.05)
+	current_speed = max(current_speed - speed_decrease_rate, 0.1)
 	
 	# Calculate delay (slower in final cycles)
 	var delay = current_speed
@@ -116,4 +116,7 @@ func stop_roulette_at(index: int):
 		var final_element = elements[index]
 		if final_element.material is ShaderMaterial:
 			final_element.material.set_shader_parameter("selected", true)
+
+
+
 	

@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://cc8se1kj8cvv0"]
+
+[ext_resource type="Texture2D" uid="uid://b2ghat2d30yyq" path="res://assets/backgrounds/results_background.png" id="1_g5l2x"]
+[ext_resource type="Texture2D" uid="uid://dx4l7tfav0ouc" path="res://assets/elements/frame.png" id="2_bwgik"]
+[ext_resource type="Texture2D" uid="uid://ds2pisknihvy4" path="res://assets/elements/lola_AI.png" id="3_k1jj6"]
+[ext_resource type="Texture2D" uid="uid://cdm5cd54we40p" path="res://assets/elements/continueB.png" id="4_c200s"]
+[ext_resource type="Texture2D" uid="uid://bukt7ehnp3fwr" path="res://assets/elements/homeB.png" id="5_nodi8"]
+
+[node name="ResultsPage" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.160471, 0.155774)
+texture = ExtResource("1_g5l2x")
+stretch_mode = 6
+
+[node name="frame" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 162.0
+offset_top = 50.0
+offset_right = 5458.0
+offset_bottom = 3319.0
+scale = Vector2(0.159915, 0.147671)
+texture = ExtResource("2_bwgik")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 854.0
+offset_top = 263.0
+offset_right = 2377.0
+offset_bottom = 2410.0
+scale = Vector2(0.216796, 0.210449)
+texture = ExtResource("3_k1jj6")
+stretch_mode = 6
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 548.0
+offset_top = 551.0
+offset_right = 2283.0
+offset_bottom = 1112.0
+scale = Vector2(0.168376, 0.163447)
+texture = ExtResource("4_c200s")
+stretch_mode = 3
+
+[node name="TextureRect4" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 554.0
+offset_right = 1959.0
+offset_bottom = 1069.0
+scale = Vector2(0.168376, 0.163447)
+texture = ExtResource("5_nodi8")
+stretch_mode = 3
