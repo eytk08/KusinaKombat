@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://gk36p27y2dec"]
+[gd_scene load_steps=7 format=3 uid="uid://gk36p27y2dec"]
 
 [ext_resource type="FontFile" uid="uid://dvm3m0ux7d4n0" path="res://assets/elements/PixelifySans-Medium.ttf" id="1_fsnff"]
 [ext_resource type="Texture2D" uid="uid://bie6e4iv5f4v7" path="res://assets/elements/AI info.png" id="2_buge4"]
 [ext_resource type="Texture2D" uid="uid://d2mh0e31u18qv" path="res://assets/buttons/settingsB.png" id="3_buge4"]
+[ext_resource type="PackedScene" uid="uid://dd827lfbe6hsv" path="res://UI/scenes/settings.tscn" id="4_2b0gx"]
+[ext_resource type="Script" uid="uid://4xjtdi8qkcqk" path="res://UI/scripts/menu_b.gd" id="4_81pf8"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2b0gx"]
 load_path = "res://.godot/imported/USER INFO.png-f0717f484c58002aac77d3a8a1eb1e47.ctex"
@@ -71,7 +73,7 @@ theme_override_fonts/font = ExtResource("1_fsnff")
 theme_override_font_sizes/font_size = 450
 text = "7"
 
-[node name="TextureButton" type="TextureButton" parent="bg"]
+[node name="menuB" type="TextureButton" parent="bg"]
 layout_mode = 0
 offset_left = 548.086
 offset_top = 353.604
@@ -79,3 +81,13 @@ offset_right = 3627.09
 offset_bottom = 3552.6
 scale = Vector2(0.18639, 0.18639)
 texture_normal = ExtResource("3_buge4")
+script = ExtResource("4_81pf8")
+
+[node name="settings_menu" parent="." instance=ExtResource("4_2b0gx")]
+visible = false
+offset_left = 62.0
+offset_top = 40.0
+offset_right = 62.0
+offset_bottom = 40.0
+
+[connection signal="pressed" from="bg/menuB" to="bg/menuB" method="_on_pressed"]

@@ -11,85 +11,36 @@ offset_bottom = 0.199951
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 0.999992
-offset_top = -2.0
-offset_right = 578.0
-offset_bottom = 780.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.161465, 0.161465)
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 3716.0
+offset_bottom = 2412.0
+scale = Vector2(0.168191, 0.167314)
+theme_override_constants/h_separation = 40
+theme_override_constants/v_separation = 40
+columns = 3
+
+[node name="TextureRect" type="TextureRect" parent="GridContainer"]
+layout_mode = 2
 texture = ExtResource("1_y14be")
 
-[node name="TextureRect2" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1.0
-offset_top = 211.0
-offset_right = 576.0
-offset_bottom = 993.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.161465, 0.161465)
+[node name="TextureRect2" type="TextureRect" parent="GridContainer"]
+layout_mode = 2
 texture = ExtResource("1_y14be")
 
-[node name="TextureRect3" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 217.0
-offset_right = 794.0
-offset_bottom = 782.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.161465, 0.161465)
+[node name="TextureRect3" type="TextureRect" parent="GridContainer"]
+layout_mode = 2
 texture = ExtResource("1_y14be")
 
-[node name="TextureRect4" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 217.0
-offset_top = 213.0
-offset_right = 794.0
-offset_bottom = 995.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.161465, 0.161465)
+[node name="TextureRect4" type="TextureRect" parent="GridContainer"]
+layout_mode = 2
 texture = ExtResource("1_y14be")
 
-[node name="TextureRect5" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 440.0
-offset_top = -2.0
-offset_right = 1017.0
-offset_bottom = 780.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.161465, 0.161465)
+[node name="TextureRect5" type="TextureRect" parent="GridContainer"]
+layout_mode = 2
 texture = ExtResource("1_y14be")
 
-[node name="TextureRect6" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 440.0
-offset_top = 211.0
-offset_right = 1017.0
-offset_bottom = 993.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.161465, 0.161465)
+[node name="TextureRect6" type="TextureRect" parent="GridContainer"]
+layout_mode = 2
 texture = ExtResource("1_y14be")

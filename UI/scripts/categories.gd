@@ -1,6 +1,6 @@
 extends Node
 
-@export var initial_delay: float = 0.3
+@export var initial_delay: float = 2
 @export var selection_speed: float = 0.2
 @export var speed_decrease_rate: float = 0.005
 @export var final_selection_delay: float = 0.1

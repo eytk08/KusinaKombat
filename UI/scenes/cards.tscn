@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://c3n84sxb6i8rj"]
+[gd_scene load_steps=8 format=3 uid="uid://b08k1e4hcw6ow"]
 
 [ext_resource type="Texture2D" uid="uid://td0r8yxsmmk4" path="res://assets/backgrounds/woodBG.png" id="1_h14qy"]
+[ext_resource type="Texture2D" uid="uid://cn4uc1gxv84sq" path="res://assets/elements/SPECIAL.png" id="3_0ndqm"]
+[ext_resource type="Texture2D" uid="uid://m8q8c152ks3j" path="res://assets/elements/MEAT.png" id="3_6lr6f"]
+[ext_resource type="Texture2D" uid="uid://ccf7cuwtu6phq" path="res://assets/elements/INGREDIENTS.png" id="5_xq4yv"]
+[ext_resource type="Texture2D" uid="uid://de6uk5wxr7qd2" path="res://assets/elements/VEGETABLES.png" id="6_1pydo"]
+[ext_resource type="Texture2D" uid="uid://e4r0phj7pjoa" path="res://assets/elements/COOKING.png" id="7_xq4yv"]
+[ext_resource type="FontFile" uid="uid://dvm3m0ux7d4n0" path="res://assets/elements/PixelifySans-Medium.ttf" id="8_1pydo"]
 
 [node name="Cards" type="Control"]
 layout_mode = 3
@@ -10,17 +16,100 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="BG" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(0.145662, 0.145134)
 texture = ExtResource("1_h14qy")
 
-[node name="CenterContainer" type="CenterContainer" parent="TextureRect"]
+[node name="SPECIAL" type="TextureButton" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 48.0
+offset_top = 464.0
+offset_right = 1598.0
+offset_bottom = 918.0
+scale = Vector2(0.166571, 0.166571)
+texture_normal = ExtResource("3_0ndqm")
 
-[node name="TextureRect" type="TextureRect" parent="TextureRect/CenterContainer"]
+[node name="MEAT" type="TextureButton" parent="."]
 layout_mode = 2
+offset_left = 48.0
+offset_top = 192.0
+offset_right = 1598.0
+offset_bottom = 646.0
+scale = Vector2(0.166602, 0.166994)
+texture_normal = ExtResource("3_6lr6f")
+
+[node name="INGREDIENTS" type="TextureButton" parent="."]
+layout_mode = 2
+offset_left = 49.0
+offset_top = 285.0
+offset_right = 1599.0
+offset_bottom = 739.0
+scale = Vector2(0.167126, 0.167126)
+texture_normal = ExtResource("5_xq4yv")
+
+[node name="VEGETABLES" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 375.0
+offset_right = 1598.0
+offset_bottom = 829.0
+scale = Vector2(0.16527, 0.165659)
+texture_normal = ExtResource("6_1pydo")
+
+[node name="COOKING" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 555.0
+offset_right = 1598.0
+offset_bottom = 1009.0
+scale = Vector2(0.165904, 0.165904)
+texture_normal = ExtResource("7_xq4yv")
+
+[node name="sw" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -152.0
+offset_top = 64.0
+offset_right = 837.0
+offset_bottom = 248.0
+grow_horizontal = 2
+scale = Vector2(0.325175, 0.325175)
+theme_override_constants/line_spacing = 18
+theme_override_fonts/font = ExtResource("8_1pydo")
+theme_override_font_sizes/font_size = 130
+text = "CARD DIRECTORY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 325.0
+offset_top = 160.0
+offset_right = 325.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.681, 0.681)
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+columns = 4
