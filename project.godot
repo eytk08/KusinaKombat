@@ -14,6 +14,10 @@ config/name="Kusina Kombat"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GlobalGameState="*res://UI/scripts/global_game_state.gd"
+
 [display]
 
 window/size/viewport_height=700

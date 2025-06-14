@@ -1,32 +1,48 @@
 # UICardPlaceholder.gd
 extends Control
+# card_manager.gd
+extends Node
 
-signal card_received(card_ref)
-
-var occupied: bool = false
-var current_card: Control = null
+# Load all meat cards at startup
+var all_meat_cards: Array = []
 
 func _ready():
-	# Visual setup
-	custom_minimum_size = Vector2(120, 180)
-	add_theme_stylebox_override("panel", get_theme_stylebox("panel", "CardPlaceholder"))
+	load_all_meat_cards()
 
-func can_drop_data(_position, data):
-	return data is Dictionary and data.has("card") and not occupied
+func load_all_meat_cards():
+	var dir = DirAccess.open("res://assets/cards/meat/")
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if not dir.current_is_dir() and file_name.ends_with(".png"):
+				all_meat_cards.append(file_name)
+			file_name = dir.get_next()
+	else:
+		printerr("Could not open meat cards directory!")
 
-func drop_data(_position, data):
-	var card = data["card"]
-	if card is Control and not occupied:
-		occupy(card)
-		emit_signal("card_received", card)
-
-func occupy(card: Control):
-	occupied = true
-	current_card = card
-	# Visual feedback
-	modulate = Color(1, 1, 1, 0.5)
-
-func release():
-	occupied = false
-	current_card = null
-	modulate = Color(1, 1, 1, 1)
+func get_meat_cards_for_dish(dish_data: Dictionary, total_cards_needed: int = 8) -> Array:
+	var dish_meats = dish_data.get("meat", [])
+	var matching_cards = []
+	var other_cards = all_meat_cards.duplicate()
+	
+	# Find cards that match dish meats
+	for meat in dish_meats:
+		var meat_name = meat.to_lower().replace(" ", "_")
+		for card in all_meat_cards:
+			if meat_name in card.to_lower():
+				matching_cards.append(card)
+				other_cards.erase(card)  # Remove from other cards
+	
+	# If we have enough matching cards, use them
+	if matching_cards.size() >= total_cards_needed:
+		return matching_cards.slice(0, total_cards_needed)
+	
+	# Otherwise mix with random other meat cards
+	var final_cards = matching_cards.duplicate()
+	while final_cards.size() < total_cards_needed and other_cards.size() > 0:
+		var random_index = randi() % other_cards.size()
+		final_cards.append(other_cards[random_index])
+		other_cards.remove_at(random_index)
+	
+	return final_cards

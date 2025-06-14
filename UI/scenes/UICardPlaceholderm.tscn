@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://dsmfuv5hfxmu1"]
 
-[ext_resource type="Script" uid="uid://d4eg6hf3d8cll" path="res://UI/scripts/ui_card_placeholder.gd" id="1_16kh8"]
+[ext_resource type="Script" uid="uid://cddnkyx74sdmo" path="res://UI/scripts/ui_card_placeholderm.gd" id="1_16kh8"]
 [ext_resource type="Texture2D" uid="uid://tkci3r7mwbi4" path="res://assets/elements/meat_Placeholder.png" id="2_neqxl"]
 
-[node name="UiCardPlaceholder" type="Control"]
+[node name="UiCardPlaceholderM" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://buasp5mm6mydn"]
+
+[ext_resource type="Script" uid="uid://c4xo8pcfta1vs" path="res://UI/scripts/5_loading_sec.gd" id="1_bd0b8"]
+[ext_resource type="Texture2D" uid="uid://b3w8csld8n2e4" path="res://assets/backgrounds/roadBG.png" id="1_l03h8"]
+[ext_resource type="FontFile" uid="uid://dvm3m0ux7d4n0" path="res://assets/elements/PixelifySans-Medium.ttf" id="2_qdbfv"]
+[ext_resource type="Script" uid="uid://ck3brmu4vsapr" path="res://UI/scripts/rich_text_label.gd" id="3_v40v6"]
+
+[node name="LoadingSec" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bd0b8")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.160689, 0.156821)
+texture = ExtResource("1_l03h8")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 379.0
+offset_top = 464.0
+offset_right = 562.0
+offset_bottom = 513.0
+scale = Vector2(2.14035, 2.37037)
+theme_override_fonts/normal_font = ExtResource("2_qdbfv")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Loading..."
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_v40v6")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true

@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://bjk5j0v0att85"]
+
+[ext_resource type="Script" uid="uid://t46smcwtgd6" path="res://UI/scripts/dish_select.gd" id="1_8rb3k"]
+[ext_resource type="Texture2D" uid="uid://d1ofj863yb847" path="res://assets/elements/dish_select (1).png" id="1_nq1nx"]
+[ext_resource type="Texture2D" uid="uid://k3raqpcxq0d1" path="res://assets/buttons/nextB.png" id="2_8l8m6"]
+[ext_resource type="FontFile" uid="uid://dvm3m0ux7d4n0" path="res://assets/elements/PixelifySans-Medium.ttf" id="3_8l8m6"]
+[ext_resource type="Script" uid="uid://bxb300din1s6n" path="res://UI/scenes/Dish_Select_NextB.gd" id="4_sgjhl"]
+
+[node name="DishSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8rb3k")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.159551, 0.159551)
+texture = ExtResource("1_nq1nx")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 909.0
+offset_top = 446.0
+offset_right = 3548.0
+offset_bottom = 3042.0
+scale = Vector2(0.0496808, 0.0496808)
+texture_normal = ExtResource("2_8l8m6")
+script = ExtResource("4_sgjhl")
+
+[node name="DishNameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 96.0
+offset_right = 736.0
+offset_bottom = 199.0
+scale = Vector2(1.82712, 2.24444)
+theme_override_colors/font_color = Color(0.0110876, 0.0110876, 0.0110876, 1)
+theme_override_fonts/font = ExtResource("3_8l8m6")
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="AnnouncementLabel" type="Label" parent="."]
+offset_left = 416.0
+offset_top = 88.0
+offset_right = 736.0
+offset_bottom = 195.0
+scale = Vector2(1.82712, 2.24444)
+theme_override_colors/font_color = Color(0.0110876, 0.0110876, 0.0110876, 1)
+theme_override_fonts/font = ExtResource("3_8l8m6")
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
