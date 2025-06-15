@@ -4,60 +4,82 @@
 [ext_resource type="Texture2D" uid="uid://tkci3r7mwbi4" path="res://assets/elements/meat_Placeholder.png" id="2_neqxl"]
 
 [node name="UiCardPlaceholderM" type="Control"]
+clip_contents = true
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -164.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_left = 6.00002
+offset_top = -2.0
+offset_right = 994.0
+offset_bottom = 398.0
+scale = Vector2(1.03948, 1.07981)
+size_flags_stretch_ratio = 0.0
 script = ExtResource("1_16kh8")
 
 [node name="GridContainer" type="GridContainer" parent="."]
+clip_contents = true
 layout_direction = 1
 layout_mode = 1
-offset_left = 7.0
-offset_right = 4916.0
+anchors_preset = -1
+offset_left = -1.43051e-05
+offset_right = 4984.0
 offset_bottom = 2422.0
-scale = Vector2(0.199035, 0.187297)
+scale = Vector2(0.15279, 0.145529)
 theme_override_constants/h_separation = 40
 theme_override_constants/v_separation = 40
 columns = 4
 
-[node name="TextureRect6" type="TextureRect" parent="GridContainer"]
+[node name="Texturebutton1" type="TextureButton" parent="GridContainer"]
+clip_contents = true
 layout_mode = 2
-texture = ExtResource("2_neqxl")
-expand_mode = 2
+texture_normal = ExtResource("2_neqxl")
+texture_disabled = ExtResource("2_neqxl")
+stretch_mode = 0
 
-[node name="TextureRect7" type="TextureRect" parent="GridContainer"]
+[node name="Texturebutton2" type="TextureButton" parent="GridContainer"]
+clip_contents = true
 layout_mode = 2
-texture = ExtResource("2_neqxl")
-expand_mode = 2
+texture_normal = ExtResource("2_neqxl")
+texture_disabled = ExtResource("2_neqxl")
+stretch_mode = 0
 
-[node name="TextureRect8" type="TextureRect" parent="GridContainer"]
+[node name="Texturebutton3" type="TextureButton" parent="GridContainer"]
+clip_contents = true
 layout_mode = 2
-texture = ExtResource("2_neqxl")
-expand_mode = 2
+texture_normal = ExtResource("2_neqxl")
+texture_disabled = ExtResource("2_neqxl")
+stretch_mode = 0
 
-[node name="TextureRect2" type="TextureRect" parent="GridContainer"]
+[node name="Texturebutton4" type="TextureButton" parent="GridContainer"]
+clip_contents = true
 layout_mode = 2
-texture = ExtResource("2_neqxl")
+texture_normal = ExtResource("2_neqxl")
+texture_disabled = ExtResource("2_neqxl")
+stretch_mode = 0
 
-[node name="TextureRect9" type="TextureRect" parent="GridContainer"]
+[node name="Texturebutton5" type="TextureButton" parent="GridContainer"]
+clip_contents = true
 layout_mode = 2
-texture = ExtResource("2_neqxl")
-expand_mode = 2
+texture_normal = ExtResource("2_neqxl")
+texture_disabled = ExtResource("2_neqxl")
+stretch_mode = 0
 
-[node name="TextureRect10" type="TextureRect" parent="GridContainer"]
+[node name="Texturebutton6" type="TextureButton" parent="GridContainer"]
+clip_contents = true
 layout_mode = 2
-texture = ExtResource("2_neqxl")
-expand_mode = 2
+texture_normal = ExtResource("2_neqxl")
+texture_disabled = ExtResource("2_neqxl")
+stretch_mode = 0
 
-[node name="TextureRect11" type="TextureRect" parent="GridContainer"]
+[node name="Texturebutton7" type="TextureButton" parent="GridContainer"]
+clip_contents = true
 layout_mode = 2
-texture = ExtResource("2_neqxl")
-expand_mode = 2
+texture_normal = ExtResource("2_neqxl")
+texture_disabled = ExtResource("2_neqxl")
+stretch_mode = 0
 
-[node name="TextureRect3" type="TextureRect" parent="GridContainer"]
+[node name="Texturebutton8" type="TextureButton" parent="GridContainer"]
+clip_contents = true
 layout_mode = 2
-texture = ExtResource("2_neqxl")
+texture_normal = ExtResource("2_neqxl")
+texture_disabled = ExtResource("2_neqxl")
+stretch_mode = 0

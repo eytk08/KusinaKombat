@@ -1,0 +1,72 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm41p1erurjp"]
+
+[ext_resource type="Texture2D" uid="uid://tkci3r7mwbi4" path="res://assets/elements/meat_Placeholder.png" id="1_8pvew"]
+
+[node name="Mplaceholder" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="."]
+clip_contents = true
+layout_direction = 1
+layout_mode = 1
+anchors_preset = -1
+offset_left = -1.43051e-05
+offset_right = 4984.0
+offset_bottom = 2422.0
+scale = Vector2(0.15279, 0.145529)
+theme_override_constants/h_separation = 40
+theme_override_constants/v_separation = 40
+columns = 4
+
+[node name="Texturebutton1" type="TextureButton" parent="GridContainer"]
+clip_contents = true
+layout_mode = 2
+texture_normal = ExtResource("1_8pvew")
+stretch_mode = 0
+
+[node name="Texturebutton2" type="TextureButton" parent="GridContainer"]
+clip_contents = true
+layout_mode = 2
+texture_normal = ExtResource("1_8pvew")
+stretch_mode = 0
+
+[node name="Texturebutton3" type="TextureButton" parent="GridContainer"]
+clip_contents = true
+layout_mode = 2
+texture_normal = ExtResource("1_8pvew")
+stretch_mode = 0
+
+[node name="Texturebutton4" type="TextureButton" parent="GridContainer"]
+clip_contents = true
+layout_mode = 2
+texture_normal = ExtResource("1_8pvew")
+stretch_mode = 0
+
+[node name="Texturebutton5" type="TextureButton" parent="GridContainer"]
+clip_contents = true
+layout_mode = 2
+texture_normal = ExtResource("1_8pvew")
+stretch_mode = 0
+
+[node name="Texturebutton6" type="TextureButton" parent="GridContainer"]
+clip_contents = true
+layout_mode = 2
+texture_normal = ExtResource("1_8pvew")
+stretch_mode = 0
+
+[node name="Texturebutton7" type="TextureButton" parent="GridContainer"]
+clip_contents = true
+layout_mode = 2
+texture_normal = ExtResource("1_8pvew")
+stretch_mode = 0
+
+[node name="Texturebutton8" type="TextureButton" parent="GridContainer"]
+clip_contents = true
+layout_mode = 2
+texture_normal = ExtResource("1_8pvew")
+stretch_mode = 0

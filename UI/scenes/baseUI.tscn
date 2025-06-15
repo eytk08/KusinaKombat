@@ -19,15 +19,15 @@ offset_right = 10192.0
 offset_bottom = 6170.0
 scale = Vector2(0.113121, 0.113121)
 
-[node name="USER INFO" type="TextureRect" parent="bg"]
+[node name="USER_INFO" type="TextureRect" parent="bg"]
 layout_mode = 0
-offset_left = 433.164
-offset_top = 4906.25
-offset_right = 2772.17
-offset_bottom = 5843.25
+offset_left = 221.002
+offset_top = 5109.57
+offset_right = 2560.01
+offset_bottom = 6046.57
 texture = SubResource("CompressedTexture2D_2b0gx")
 
-[node name="Label" type="Label" parent="bg/USER INFO"]
+[node name="user_Label" type="Label" parent="bg/USER_INFO"]
 layout_direction = 2
 layout_mode = 1
 anchors_preset = -1
@@ -35,27 +35,27 @@ anchor_left = 0.196
 anchor_top = 0.596
 anchor_right = 0.196
 anchor_bottom = 0.596
-offset_left = -121.932
-offset_top = -219.325
-offset_right = 85.0676
-offset_bottom = 200.675
+offset_left = -151.432
+offset_top = -297.005
+offset_right = 114.568
+offset_bottom = 242.995
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.908204, 0.923676, 1)
 theme_override_fonts/font = ExtResource("1_fsnff")
 theme_override_font_sizes/font_size = 450
-text = "6"
+text = "8"
 
-[node name="AI INFO" type="TextureRect" parent="bg"]
+[node name="AI_INFO" type="TextureRect" parent="bg"]
 layout_mode = 0
-offset_left = 7549.44
-offset_top = 300.563
-offset_right = 10024.4
-offset_bottom = 1237.56
+offset_left = 7611.33
+offset_top = 194.482
+offset_right = 10086.3
+offset_bottom = 1131.48
 scale = Vector2(0.948341, 0.948341)
 texture = ExtResource("2_buge4")
 
-[node name="Label" type="Label" parent="bg/AI INFO"]
+[node name="ai_label" type="Label" parent="bg/AI_INFO"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.798
@@ -71,15 +71,15 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.914468, 0.879417, 1)
 theme_override_fonts/font = ExtResource("1_fsnff")
 theme_override_font_sizes/font_size = 450
-text = "7"
+text = "8"
 
 [node name="menuB" type="TextureButton" parent="bg"]
 layout_mode = 0
-offset_left = 548.086
-offset_top = 353.604
-offset_right = 3627.09
-offset_bottom = 3552.6
-scale = Vector2(0.18639, 0.18639)
+offset_left = 194.482
+offset_top = 185.643
+offset_right = 3273.49
+offset_bottom = 3384.64
+scale = Vector2(0.202287, 0.202287)
 texture_normal = ExtResource("3_buge4")
 script = ExtResource("4_81pf8")
 
@@ -89,5 +89,11 @@ offset_left = 62.0
 offset_top = 40.0
 offset_right = 62.0
 offset_bottom = 40.0
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="TurnLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
 
 [connection signal="pressed" from="bg/menuB" to="bg/menuB" method="_on_pressed"]

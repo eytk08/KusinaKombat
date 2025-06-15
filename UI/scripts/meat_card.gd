@@ -1,209 +1,186 @@
-# card_output.gd
 extends Control
 
-enum {PLAYER_TURN, AI_TURN}
-
 @onready var card_manager = preload("res://UI/scripts/card_manager_meat.gd").new()
-@onready var ai_agent = preload("res://UI/scripts/AI_AGENT.gd").new()
-@onready var card_placeholder = $UICardPlaceholder
-@onready var turn_label = $TurnLabel
-@onready var timer = $Timer
-@onready var player_info = $PlayerInfo
-@onready var player_cards_left = $PlayerInfo/Label
-@onready var ai_info = $AIInfo
-@onready var ai_cards_left = $AIInfo/Label
-@onready var player_selection_display = $PlayerSelection
-@onready var ai_selection_display = $AISelection
-@onready var result_label = $ResultLabel
-@onready var continue_button = $ContinueButton
+@onready var card_placeholder = $MarginContainer/UiCardPlaceholder
+@onready var ai_agent = preload("res://UI/scripts/AI_AGENT.gd").new()  
+@onready var turn_timer = $Timer
+@onready var turn_label = $bg/TurnLabel
+@onready var user_info_panel = $bg/USER_INFO
+@onready var ai_info_panel = $bg/AI_INFO
+@onready var user_label = $bg/USER_INFO/user_Label
+@onready var ai_label = $bg/AI_INFO/ai_label
 
-var current_turn = PLAYER_TURN
 var selected_dish_data: Dictionary
-var available_cards: Array = []
+var is_player_turn: bool = true
 var player_selected_cards: Array = []
 var ai_selected_cards: Array = []
-var card_objects: Array = []
-var cards_per_turn: int = 4
-var player_cards_remaining: int = 4
-var ai_cards_remaining: int = 4
+var available_cards: Array = []
+var current_selection: String = ""
+var all_meat_cards: Array = [] 
+var player_score_counter := 8
+var ai_score_counter := 8
 
 func _ready():
 	add_child(card_manager)
-	add_child(ai_agent)
+	card_placeholder.card_selected.connect(on_card_selected)
 	
-	continue_button.visible = false
-	result_label.visible = false
-	
-	var dish_selection = get_node_or_null("/root/DishSelection")
-	if dish_selection:
-		dish_selection.connect("dish_selected", _on_dish_selected)
+	var dataset := load_dataset()
+	var dish_name: String = Globals.selected_dish_name.strip_edges().to_lower()
 
-func _on_dish_selected(dish_data: Dictionary):
-	selected_dish_data = dish_data
-	available_cards = card_manager.get_meat_cards_for_dish(dish_data)
-	ai_agent.initialize(dish_data, available_cards.duplicate())
-	setup_cards(available_cards)
-	start_battle()
+	if dataset.has("dishes") and dataset["dishes"].has(dish_name):
+		selected_dish_data = dataset["dishes"][dish_name]
+	else:
+		printerr("❌ Dish not found in dataset: ", dish_name)
+		return
 
-func setup_cards(card_textures: Array):
-	# Clear existing cards
-	for child in card_placeholder.get_children():
-		child.queue_free()
-	card_objects = []
+	# Load and display cards
+	all_meat_cards = card_manager.get_meat_cards_for_dish(selected_dish_data)
+	available_cards = all_meat_cards.duplicate()
+	display_cards(all_meat_cards)
 	
-	for i in range(min(card_textures.size(), 8)):
-		var card = preload("res://UI/scenes/card_template.tscn").instantiate()
-		card.set_texture(load("res://assets/cards/meat/" + card_textures[i]))
-		card.set_meta("card_data", card_textures[i])
-		card_placeholder.add_child(card)
-		card_objects.append(card)
-		card.connect("pressed", _on_card_selected.bind(card))
+	ai_agent.initialize(selected_dish_data, available_cards, ai_agent.BATTLE_TYPE.MEAT)
+	ai_agent.difficulty = 2
+	start_turn()
+	print("✅ Displaying meat cards for ", dish_name, ": ", all_meat_cards)
 
-func start_battle():
-	player_selected_cards = []
-	ai_selected_cards = []
-	player_cards_remaining = cards_per_turn
-	ai_cards_remaining = cards_per_turn
-	
-	# Reset UI
-	continue_button.visible = false
-	result_label.visible = false
-	
-	# Reset all cards
-	for card in card_objects:
-		card.disabled = false
-		card.modulate = Color(1, 1, 1)
-	
-	update_cards_remaining_display()
-	update_turn_display()
-	update_selection_display()
-	
-	if current_turn == AI_TURN:
-		begin_ai_turn()
+func load_dataset() -> Dictionary:
+	var path := "res://assets/DATASET.json"
+	if FileAccess.file_exists(path):
+		var file := FileAccess.open(path, FileAccess.READ)
+		var content := file.get_as_text()
+		var json_result = JSON.parse_string(content)
+		if typeof(json_result) == TYPE_DICTIONARY:
+			return json_result
+		else:
+			printerr("❌ Failed to parse JSON")
+	else:
+		printerr("❌ DATASET.json not found!")
+	return {}
 
-func begin_ai_turn():
-	timer.start(0.5)  # Initial delay before AI starts selecting
+func display_cards(card_textures: Array):
+	# Only show available cards
+	var cards_to_show = []
+	for card in card_textures:
+		if available_cards.has(card) or all_meat_cards.has(card):
+			cards_to_show.append(card)
+	
+	card_placeholder.setup_with_textures(cards_to_show)
+	
+	for i in range(cards_to_show.size()):
+		print("🃏 Card %d: %s" % [i, cards_to_show[i]])
+		
+func start_turn():
+	update_turn_ui()
+	if is_player_turn:
+		turn_label.text = "Your Turn (6s)"
+	else:
+		turn_label.text = "AI's Turn (6s)"
+		ai_turn()
+	
+	turn_timer.start()
+
+func _on_turn_timeout():
+	if is_player_turn and current_selection == "":
+		if available_cards.size() > 0:
+			on_card_selected(available_cards[0])
+	process_turn_end()
+
+func process_turn_end():
+	if is_player_turn and current_selection != "":
+		player_selected_cards.append(current_selection)
+		Globals.player_meat_cards = player_selected_cards.duplicate()
+	elif not is_player_turn:
+		Globals.ai_meat_cards = ai_selected_cards.duplicate()
+	
+	current_selection = ""
+	
+	# Check if game should end (after at least 1 card each)
+	if player_selected_cards.size() + ai_selected_cards.size() >= 2:
+		end_game()
+	else:
+		is_player_turn = !is_player_turn
+		start_turn()
 
 func ai_turn():
-	if ai_cards_remaining <= 0:
-		end_ai_turn()
+	if available_cards.is_empty():
 		return
 	
-	# Get AI's card selection
-	var selected_card_data = ai_agent.select_card()
+	var ai_selection = ai_agent.select_card()
+	ai_selected_cards.append(ai_selection)
+	available_cards.erase(ai_selection)
 	
-	if selected_card_data == "":
-		end_ai_turn()
-		return
+		# Update AI score
+	ai_score_counter -= 1
+	ai_label.text = str(ai_score_counter)
 	
-	# Find and select the card in the UI
-	for card in card_objects:
-		if not card.disabled and card.get_meta("card_data") == selected_card_data:
-			ai_selected_cards.append(selected_card_data)
-			ai_cards_remaining -= 1
-			ai_agent.remove_card(selected_card_data)
-			card.disabled = true
-			card.modulate = Color(1, 0.5, 0.5)  # Red tint for AI selection
-			break
+	display_cards(all_meat_cards)  # Show all cards but only available ones will be visible
 	
-	update_cards_remaining_display()
-	update_selection_display()
 	
-	# Continue selecting or end turn
-	if ai_cards_remaining > 0:
-		timer.start(0.8)  # Delay between AI selections
-	else:
-		end_ai_turn()
-
-func _on_card_selected(card):
-	if current_turn != PLAYER_TURN || player_cards_remaining <= 0:
-		return
-	
-	var card_data = card.get_meta("card_data")
-	player_selected_cards.append(card_data)
-	player_cards_remaining -= 1
-	ai_agent.remove_card(card_data)  # Remove from AI's available cards
-	card.disabled = true
-	card.modulate = Color(0.5, 0.5, 0.5)  # Gray out player selection
-	
-	update_cards_remaining_display()
-	update_selection_display()
-	
-	if player_cards_remaining <= 0:
-		end_player_turn()
-
-func end_player_turn():
-	current_turn = AI_TURN
-	update_turn_display()
-	update_cards_remaining_display()
-	begin_ai_turn()
-
-func end_ai_turn():
-	current_turn = PLAYER_TURN
-	player_cards_remaining = cards_per_turn  # Reset player's allowance
-	update_turn_display()
-	update_cards_remaining_display()
-	
-	check_battle_end()
-
-func update_turn_display():
-	turn_label.text = "Player's Turn" if current_turn == PLAYER_TURN else "AI's Turn"
-	
-	# Visual feedback
-	if current_turn == PLAYER_TURN:
-		player_info.modulate = Color(1, 1, 1)  # Bright
-		ai_info.modulate = Color(0.5, 0.5, 0.5)  # Dim
-	else:
-		player_info.modulate = Color(0.5, 0.5, 0.5)  # Dim
-		ai_info.modulate = Color(1, 1, 1)  # Bright
-
-func update_cards_remaining_display():
-	player_cards_left.text = "Cards Left: %d" % player_cards_remaining
-	ai_cards_left.text = "Cards Left: %d" % ai_cards_remaining
-
-func update_selection_display():
-	player_selection_display.update_cards(player_selected_cards)
-	ai_selection_display.update_cards(ai_selected_cards)
-
-func check_battle_end():
-	# Check if both players have selected all their cards
-	var player_done = player_selected_cards.size() >= cards_per_turn
-	var ai_done = ai_selected_cards.size() >= cards_per_turn
-	
-	# Or if no cards left to select
-	var no_cards_left = true
-	for card in card_objects:
-		if not card.disabled:
-			no_cards_left = false
-			break
-	
-	if (player_done and ai_done) or no_cards_left:
-		evaluate_results()
-
-func evaluate_results():
+func end_game():
 	var player_score = calculate_score(player_selected_cards)
 	var ai_score = calculate_score(ai_selected_cards)
 	
-	result_label.visible = true
+	Globals.meat_battle_results = {
+		"player_score": player_score,
+		"ai_score": ai_score,
+		"player_cards": player_selected_cards,
+		"ai_cards": ai_selected_cards,
+		"dish_data": selected_dish_data 
+	}
 	
-	if player_score > ai_score:
-		result_label.text = "You won! Great ingredient choices!"
-	elif player_score < ai_score:
-		result_label.text = "AI won! Better luck next time!"
+	await get_tree().create_timer(1.5).timeout
+	get_tree().change_scene_to_file("res://UI/scenes/cd_ingredients.tscn")
+
+func calculate_score(selected_cards: Array) -> int:
+	var score = 0
+	var dish_data = ai_agent.dish_knowledge.get(selected_dish_data.get("id", ""), {}).get("meat", {})
+	
+	for card in selected_cards:
+		var card_lower = card.to_lower()
+		
+		for ingredient in dish_data.get("essential", []):
+			if ingredient.to_lower() in card_lower:
+				score += 4
+		
+		for item in dish_data.get("tier1", []):
+			if item.to_lower() in card_lower:
+				score += 3
+		
+		for item in dish_data.get("tier2", []):
+			if item.to_lower() in card_lower:
+				score += 1
+	
+	return score
+	
+func on_card_selected(card_texture: String):
+	if not is_player_turn:
+		return
+	
+	current_selection = card_texture
+	available_cards.erase(card_texture)
+	ai_agent.update_player_cards(player_selected_cards + [card_texture])
+	
+	player_score_counter -= 1
+	user_label.text = str(player_score_counter)
+	# Update display - this will automatically hide the selected card
+	display_cards(all_meat_cards)
+	
+	# Optional: Add additional visual feedback
+	var selected_button = card_placeholder.get_selected_button(card_texture)
+	if selected_button:
+		#var tween = create_tween()
+		#tween.tween_property(selected_button, "modulate:a", 0.0, 0.3)
+		selected_button.disabled = true
+
+	
+	turn_timer.stop()
+	process_turn_end()
+	
+func update_turn_ui():
+	if is_player_turn:
+		user_info_panel.modulate = Color(1, 1, 1, 1)  # Fully visible
+		ai_info_panel.modulate = Color(0.6, 0.6, 0.6, 0.5)  # Dimmed
 	else:
-		result_label.text = "It's a tie!"
+		user_info_panel.modulate = Color(0.6, 0.6, 0.6, 0.5)  # Dimmed
+		ai_info_panel.modulate = Color(1, 1, 1, 1)  # Fully visible
 	
-	# Store results for later use
-	if GlobalGameState:
-		GlobalGameState.player_selected_meats = player_selected_cards
-		GlobalGameState.ai_selected_meats = ai_selected_cards
-	
-	continue_button.visible = true
-
-
-func _on_continue_button_pressed():
-	get_tree().change_scene_to_file("res://next_scene_path.tscn")
-
-func _on_timer_timeout():
-	if current_turn == AI_TURN:
-		ai_turn()

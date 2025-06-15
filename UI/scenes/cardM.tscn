@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://77gm02ofyn2w"]
+
+[ext_resource type="Texture2D" uid="uid://tkci3r7mwbi4" path="res://assets/elements/meat_Placeholder.png" id="1_53bjb"]
+
+[node name="CardM" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -386.0
+offset_bottom = -342.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureButton" type="TextureButton" parent="."]
+clip_contents = true
+layout_mode = 2
+offset_left = -1.43051e-05
+offset_right = 1216.0
+offset_bottom = 1191.0
+scale = Vector2(0.20673, 0.20673)
+texture_normal = ExtResource("1_53bjb")
+stretch_mode = 0

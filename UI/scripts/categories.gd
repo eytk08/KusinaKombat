@@ -1,10 +1,10 @@
 extends Node
 
-@export var initial_delay: float = 2
+@export var initial_delay: float = 1
 @export var selection_speed: float = 0.2
 @export var speed_decrease_rate: float = 0.005
 @export var final_selection_delay: float = 0.1
-@export var cycles: int = 4
+@export var cycles: int = 1
 
 signal dish_selected(dish_name: String, dish_data: Dictionary)
 

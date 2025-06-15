@@ -1,46 +1,67 @@
-[gd_scene load_steps=2 format=3 uid="uid://dgrhm4tpmna5a"]
+[gd_scene load_steps=3 format=3 uid="uid://dgrhm4tpmna5a"]
 
+[ext_resource type="Script" uid="uid://bnor18hq0cxgy" path="res://UI/scripts/ui_card_placeholderc.gd" id="1_bajeu"]
 [ext_resource type="Texture2D" uid="uid://tkci3r7mwbi4" path="res://assets/elements/meat_Placeholder.png" id="1_y14be"]
 
 [node name="UiCardPlaceholderc" type="Control"]
 layout_mode = 3
-anchor_right = 0.555
-anchor_bottom = 0.584
-offset_right = -0.359985
-offset_bottom = 0.199951
+anchor_right = 0.554688
+anchor_bottom = 0.584286
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_bajeu")
+metadata/_edit_use_anchors_ = true
 
 [node name="GridContainer" type="GridContainer" parent="."]
-layout_mode = 0
-offset_left = 8.0
-offset_right = 3716.0
-offset_bottom = 2412.0
-scale = Vector2(0.168191, 0.167314)
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 82.0
+offset_top = -4.0
+offset_right = 483.0
+offset_bottom = 627.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.360796, 0.339678)
 theme_override_constants/h_separation = 40
 theme_override_constants/v_separation = 40
-columns = 3
+columns = 2
 
-[node name="TextureRect" type="TextureRect" parent="GridContainer"]
+[node name="TextureButton" type="TextureButton" parent="GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(500, 500)
+layout_direction = 1
 layout_mode = 2
-texture = ExtResource("1_y14be")
+texture_normal = ExtResource("1_y14be")
+texture_disabled = ExtResource("1_y14be")
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="TextureRect2" type="TextureRect" parent="GridContainer"]
+[node name="TextureButton2" type="TextureButton" parent="GridContainer"]
+custom_minimum_size = Vector2(500, 500)
+layout_direction = 1
 layout_mode = 2
-texture = ExtResource("1_y14be")
+texture_normal = ExtResource("1_y14be")
+texture_disabled = ExtResource("1_y14be")
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="TextureRect3" type="TextureRect" parent="GridContainer"]
+[node name="TextureButton3" type="TextureButton" parent="GridContainer"]
+custom_minimum_size = Vector2(500, 500)
+layout_direction = 1
 layout_mode = 2
-texture = ExtResource("1_y14be")
+texture_normal = ExtResource("1_y14be")
+texture_disabled = ExtResource("1_y14be")
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="TextureRect4" type="TextureRect" parent="GridContainer"]
+[node name="TextureButton4" type="TextureButton" parent="GridContainer"]
+custom_minimum_size = Vector2(500, 500)
+layout_direction = 1
 layout_mode = 2
-texture = ExtResource("1_y14be")
-
-[node name="TextureRect5" type="TextureRect" parent="GridContainer"]
-layout_mode = 2
-texture = ExtResource("1_y14be")
-
-[node name="TextureRect6" type="TextureRect" parent="GridContainer"]
-layout_mode = 2
-texture = ExtResource("1_y14be")
+texture_normal = ExtResource("1_y14be")
+texture_disabled = ExtResource("1_y14be")
+ignore_texture_size = true
+stretch_mode = 0

@@ -47,6 +47,7 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="AnnouncementLabel" type="Label" parent="."]
+layout_mode = 0
 offset_left = 416.0
 offset_top = 88.0
 offset_right = 736.0

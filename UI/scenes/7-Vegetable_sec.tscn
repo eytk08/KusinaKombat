@@ -1,21 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://c4eo5xwwbpob0"]
+[gd_scene load_steps=5 format=3 uid="uid://c4eo5xwwbpob0"]
 
 [ext_resource type="PackedScene" uid="uid://gk36p27y2dec" path="res://UI/scenes/baseUI.tscn" id="1_2cwsl"]
+[ext_resource type="Script" uid="uid://cri7lg7lmiaoy" path="res://UI/scripts/7_vegetable_sec.gd" id="2_2dplf"]
 [ext_resource type="Texture2D" uid="uid://b636ubquj3xjx" path="res://assets/backgrounds/marketBG.png" id="2_rnwky"]
 [ext_resource type="PackedScene" uid="uid://bay6ndcwm3bsj" path="res://UI/scenes/UICardPlaceholderv.tscn" id="3_gr8wc"]
 
-[node name="BaseUi" instance=ExtResource("1_2cwsl")]
+[node name="ing_card" instance=ExtResource("1_2cwsl")]
+script = ExtResource("2_2dplf")
 
 [node name="bg" parent="." index="0"]
 offset_bottom = 6179.0
 texture = ExtResource("2_rnwky")
 
+[node name="menuB" parent="bg" index="2"]
+scale = Vector2(0.202287, 0.202287)
+
 [node name="MarginContainer" type="MarginContainer" parent="." index="1"]
+clip_contents = true
+layout_direction = 1
 layout_mode = 0
-offset_left = 65.0
-offset_top = 145.0
-offset_right = 1088.0
-offset_bottom = 544.0
+offset_left = 39.0
+offset_top = 126.0
+offset_right = 1062.0
+offset_bottom = 525.0
+scale = Vector2(1.05882, 1.14113)
 
 [node name="UiCardPlaceholderv" parent="MarginContainer" index="0" instance=ExtResource("3_gr8wc")]
+clip_contents = true
+custom_minimum_size = Vector2(150, 0)
+layout_direction = 0
 layout_mode = 2
+
+[node name="TurnLabel" parent="." index="4"]
+layout_mode = 0

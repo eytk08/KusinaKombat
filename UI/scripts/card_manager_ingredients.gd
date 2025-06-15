@@ -1,40 +1,80 @@
 # card_manager_ingredients.gd
 extends Node
 
-func get_ingredient_cards_for_dish(dish_data: Dictionary) -> Array:
-	var all_ingredients = [
-		"garlic.png", "onion.png", "pepper.png", "salt.png",
-		"oil.png", "butter.png", "flour.png", "sugar.png",
-		"vinegar.png", "soy_sauce.png", "herbs.png", "spices.png"
-	]
+# Returns array containing required ingredients + random ones (total of 21)
+func get_ingredient_cards_for_dish(dish_data: Dictionary, total_cards: int = 21) -> Array:
+	var all_cards := []
 	
-	var dish_ingredients = dish_data.get("ingredients", [])
-	var matched_ingredients = []
-	var other_ingredients = []
+	# 1. Get required ingredients first
+	var required_cards := _get_required_cards(dish_data)
+	all_cards.append_array(required_cards)
 	
-	# Separate ingredients that match the dish
-	for ingredient in all_ingredients:
-		var ingredient_name = ingredient.replace(".png", "").replace("_", " ").to_lower()
-		for dish_ing in dish_ingredients:
-			if dish_ing.to_lower() in ingredient_name:
-				matched_ingredients.append(ingredient)
-				break
-			else:
-				other_ingredients.append(ingredient)
+	# 2. Calculate how many random cards we need
+	var remaining_slots = total_cards - required_cards.size()
+	if remaining_slots > 0:
+		var random_cards := _get_random_ingredient_cards(remaining_slots, required_cards)
+		all_cards.append_array(random_cards)
 	
-	# Shuffle and select cards (prioritizing matching ingredients)
-	matched_ingredients.shuffle()
-	other_ingredients.shuffle()
+	# 3. Shuffle the combined array
+	all_cards.shuffle()
 	
-	# Return 8 cards (or as many as available) with priority to matched ingredients
-	var selected_cards = []
-	selected_cards.append_array(matched_ingredients.slice(0, min(4, matched_ingredients.size())))
-	selected_cards.append_array(other_ingredients.slice(0, min(8 - selected_cards.size(), other_ingredients.size())))
-	
-	return selected_cards
+	print("📦 Generated %d cards (%d required + %d random)" % [
+		all_cards.size(),
+		required_cards.size(),
+		total_cards - required_cards.size()
+	])
+	return all_cards
 
-func _on_continue_button_pressed():
-	# Transition to ingredients scene
-	var ingredients_scene = preload("res://UI/scenes/7-Vegetable_sec.tscn").instantiate()
-	get_tree().root.add_child(ingredients_scene)
-	queue_free()  # Remove current meat scene
+# Helper function to get required ingredients (unchanged)
+func _get_required_cards(dish_data: Dictionary) -> Array:
+	var required_cards := []
+	if dish_data.has("ingredients"):
+		for ingredient in dish_data["ingredients"]:
+			var texture_path = "res://assets/cards/ingredients/%s.png" % ingredient.to_lower().replace(" ", "_").strip_edges()
+			if ResourceLoader.exists(texture_path):
+				required_cards.append(texture_path)
+			else:
+				printerr("⚠️ Missing required texture: ", texture_path)
+	return required_cards
+
+# Enhanced random card selection that ensures we get exactly the requested amount
+func _get_random_ingredient_cards(count: int, exclude: Array) -> Array:
+	var random_cards := []
+	var available_cards := _get_all_ingredient_paths()
+	
+	# Create a pool of available cards excluding required ones
+	var card_pool := []
+	for card in available_cards:
+		if not exclude.has(card):
+			card_pool.append(card)
+	
+	# If we don't have enough cards, use what we have
+	count = min(count, card_pool.size())
+	
+	# Fisher-Yates shuffle algorithm for better randomness
+	for i in range(card_pool.size() - 1, 0, -1):
+		var j = randi() % (i + 1)
+		var temp = card_pool[i]
+		card_pool[i] = card_pool[j]
+		card_pool[j] = temp
+	
+	# Take the first 'count' cards from the shuffled pool
+	random_cards = card_pool.slice(0, count)
+	
+	return random_cards
+
+# Cache the ingredient paths for better performance
+var _cached_ingredient_paths := []
+func _get_all_ingredient_paths() -> Array:
+	if _cached_ingredient_paths.is_empty():
+		var dir = DirAccess.open("res://assets/cards/ingredients/")
+		if dir:
+			dir.list_dir_begin()
+			var file_name = dir.get_next()
+			while file_name != "":
+				if not dir.current_is_dir() and file_name.ends_with(".png"):
+					_cached_ingredient_paths.append("res://assets/cards/ingredients/" + file_name)
+				file_name = dir.get_next()
+		else:
+			printerr("⚠️ Could not open ingredients directory!")
+	return _cached_ingredient_paths.duplicate()
