@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cp5oqsxcvfcpn"]
+[gd_scene load_steps=7 format=3 uid="uid://cp5oqsxcvfcpn"]
 
-[ext_resource type="Texture2D" uid="uid://054r5vca82j7" path="res://assets/backgrounds/bahayBG.png" id="1_8he2b"]
+[ext_resource type="Texture2D" uid="uid://td0r8yxsmmk4" path="res://assets/backgrounds/woodBG.png" id="1_81fmt"]
+[ext_resource type="Texture2D" uid="uid://byhtrb3wnsj4c" path="res://assets/elements/P1.png" id="2_jwkqd"]
+[ext_resource type="Texture2D" uid="uid://b7cmvworr7a7q" path="res://assets/elements/P2.png" id="3_w6nms"]
 [ext_resource type="FontFile" uid="uid://dvm3m0ux7d4n0" path="res://assets/elements/PixelifySans-Medium.ttf" id="4_4kjlw"]
-[ext_resource type="Script" uid="uid://wf5kceuk1a5y" path="res://UI/scripts/label.gd" id="4_4t5ps"]
 [ext_resource type="Texture2D" uid="uid://k3raqpcxq0d1" path="res://assets/buttons/nextB.png" id="5_4kjlw"]
 [ext_resource type="Script" uid="uid://cicb25rh77g0c" path="res://UI/scripts/texture_rect_4.gd" id="7_0db4t"]
 
@@ -17,27 +18,45 @@ offset_top = 4.0
 offset_right = 7862.0
 offset_bottom = 4836.0
 scale = Vector2(0.146325, 0.146325)
-texture = ExtResource("1_8he2b")
+texture = ExtResource("1_81fmt")
 expand_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="bahayBG"]
+layout_mode = 0
+offset_left = 444.217
+offset_top = 246.028
+offset_right = 2281.22
+offset_bottom = 2455.03
+scale = Vector2(1.97683, 1.97683)
+texture = ExtResource("2_jwkqd")
+
+[node name="TextureRect2" type="TextureRect" parent="bahayBG"]
+offset_left = 3813.43
+offset_top = 246.028
+offset_right = 5628.43
+offset_bottom = 2449.03
+scale = Vector2(1.9799, 1.9799)
+texture = ExtResource("3_w6nms")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 48.0
-offset_top = 496.0
-offset_right = 960.0
-offset_bottom = 680.0
+offset_left = 10.0
+offset_top = 5.0
+offset_right = 922.0
+offset_bottom = 189.0
+scale = Vector2(0.362106, 0.362106)
 theme_override_constants/line_spacing = 18
 theme_override_fonts/font = ExtResource("4_4kjlw")
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 90
+text = "PREVIEW...."
 clip_text = true
-script = ExtResource("4_4t5ps")
 
 [node name="nextB" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 983.0
-offset_top = 534.0
-offset_right = 3622.0
-offset_bottom = 3130.0
-scale = Vector2(0.0343204, 0.0355781)
+offset_left = 1000.0
+offset_top = 509.0
+offset_right = 3639.0
+offset_bottom = 3105.0
+scale = Vector2(0.0468334, 0.0485497)
 texture_normal = ExtResource("5_4kjlw")
 script = ExtResource("7_0db4t")

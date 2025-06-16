@@ -88,34 +88,49 @@ func _on_turn_timeout():
 	process_turn_end()
 
 func process_turn_end():
-	if is_player_turn and current_selection != "":
-		player_selected_cards.append(current_selection)
-		Globals.player_meat_cards = player_selected_cards.duplicate()
-		total_cards_selected += 1
-	elif not is_player_turn:
-		total_cards_selected += 1  
-
-	current_selection = ""  # Reset selection
-
-	# End game after 4 cards (2 per player)
-	if total_cards_selected >= max_cards_per_player * 2:
-		end_game()
-	else:
-		# Switch turns
-		is_player_turn = !is_player_turn
-		if is_player_turn:
-			start_turn()  # Player's turn
+	if is_player_turn:
+		if current_selection != "":
+			player_selected_cards.append(current_selection)
+			Globals.player_meat_cards = player_selected_cards.duplicate()
+			total_cards_selected += 1
+			print("🧍 Player selected:", current_selection)
 		else:
-			await get_tree().create_timer(1.0).timeout  # AI "thinking" delay
-			ai_turn()     # AI picks 1 card
-			# Don't call process_turn_end() here - let the timer or next input trigger it
-			start_turn()  # Start the next turn instead
+			print("⚠️ Player made no selection. Skipping.")
+	else:
+		total_cards_selected += 1  # AI already selected in ai_turn()
+
+	current_selection = ""  # Always reset after processing
+
+	print("🔄 Turn End: Total cards selected =", total_cards_selected)
+	print("🧍‍♂️ Player cards:", player_selected_cards)
+	print("🤖 AI cards:", ai_selected_cards)
+
+	# End game
+	if total_cards_selected >= max_cards_per_player * 2:
+		print("✅ All cards selected. Ending game...")
+		end_game()
+		return
+
+	is_player_turn = !is_player_turn
+	update_turn_ui()
+
+	if is_player_turn:
+		print("🧍 Player's turn begins.")
+		start_turn()
+	else:
+		print("🤖 AI's turn begins.")
+		await get_tree().create_timer(1.0).timeout
+		ai_turn()
+		await get_tree().create_timer(0.5).timeout
+		process_turn_end()
+
+
 
 func ai_turn():
 	if available_cards.is_empty() or ai_selected_cards.size() >= max_cards_per_player:
 		return  # Stop if no cards left or AI already picked 2
 
-	var ai_selection = ai_agent.select_card()
+	var ai_selection = ai_agent.select_card(available_cards)
 	ai_selected_cards.append(ai_selection)
 	Globals.ai_meat_cards = ai_selected_cards.duplicate()
 	available_cards.erase(ai_selection)

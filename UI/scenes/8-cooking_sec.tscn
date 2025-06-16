@@ -22,6 +22,3 @@ scale = Vector2(1.27355, 1.27355)
 
 [node name="UiCardPlaceholderc" parent="MarginContainer" index="0" instance=ExtResource("3_u5q2f")]
 layout_mode = 2
-
-[node name="TurnLabel" parent="." index="4"]
-layout_mode = 0

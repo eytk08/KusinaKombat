@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://djb7yw1jwhpny"]
 
 [ext_resource type="PackedScene" uid="uid://gk36p27y2dec" path="res://UI/scenes/baseUI.tscn" id="1_o7ncc"]
-[ext_resource type="Script" uid="uid://ovf7ao84w6dt" path="res://UI/scripts/meat_card.gd" id="2_bdnvs"]
+[ext_resource type="Script" uid="uid://ovf7ao84w6dt" path="res://UI/scripts/6_meat_card.gd" id="2_bdnvs"]
 [ext_resource type="Texture2D" uid="uid://ca6wk2yw54qb3" path="res://assets/backgrounds/meatBG.png" id="2_r2lrl"]
 [ext_resource type="PackedScene" uid="uid://dsmfuv5hfxmu1" path="res://UI/scenes/UICardPlaceholderm.tscn" id="3_r2lrl"]
 

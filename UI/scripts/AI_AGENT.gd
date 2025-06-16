@@ -34,7 +34,7 @@ func initialize(dish_data: Dictionary, cards: Array, type: int, player_cards: Ar
 	player_selected_cards = player_cards.duplicate()
 	current_battle_type = type
 
-func select_card() -> String:
+func select_card(available_cards: Array) -> String:
 	if available_cards.is_empty():
 		return ""
 
