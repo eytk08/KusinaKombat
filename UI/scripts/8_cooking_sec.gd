@@ -17,8 +17,8 @@ var ai_selected_methods: Array = []
 var available_methods: Array = []
 var current_selection: String = ""
 var all_cooking_methods: Array = [] 
-var player_score_counter := 4  # Fewer turns for cooking methods
-var ai_score_counter := 4
+var player_score_counter := 2  # Fewer turns for cooking methods
+var ai_score_counter := 2
 
 func _ready():
 	add_child(card_manager)

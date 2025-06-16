@@ -13,11 +13,6 @@ offset_right = 10184.0
 offset_bottom = 6188.0
 texture = ExtResource("2_r2lrl")
 
-[node name="TurnLabel" type="Label" parent="bg" index="3"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="MarginContainer" type="MarginContainer" parent="." index="1"]
 clip_contents = true
 layout_mode = 0
@@ -29,10 +24,3 @@ scale = Vector2(0.952293, 0.910241)
 
 [node name="UiCardPlaceholder" parent="MarginContainer" index="0" instance=ExtResource("3_r2lrl")]
 layout_mode = 2
-
-[node name="Timer" type="Timer" parent="." index="3"]
-
-[node name="ContinueButton" type="TextureButton" parent="." index="4"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0

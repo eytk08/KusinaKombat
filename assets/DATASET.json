@@ -1,14 +1,10 @@
 {
   "themes": {
 	"masarsa": {
-	  "name": "Masarsa (Saucy)",
+	  "name": "Masarsa",
 	  "dishes": [
 		{ "name": "kare kare", "points": 3 },
 		{ "name": "kaldereta", "points": 3 },
-		{ "name": "adobong manok", "points": 3 },
-		{ "name": "adobong baboy", "points": 3 },
-		{ "name": "menudo", "points": 3 },
-		{ "name": "afritada", "points": 3 },
 		{ "name": "bicol express", "points": 3 }
 	  ]
 	},
@@ -16,8 +12,7 @@
 	  "name": "Maanghang",
 	  "dishes": [
 		{ "name": "sisig", "points": 3 },
-		{ "name": "dinuguan", "points": 2 },
-		{ "name": "caldereta", "points": 3 },
+		{ "name": "kaldereta", "points": 3 },
 		{ "name": "bicol express", "points": 3 }
 	  ]
 	},
@@ -25,7 +20,8 @@
 	  "name": "Matamis",
 	  "dishes": [
 		{ "name": "hamonado", "points": 3 },
-		{ "name": "tocino", "points": 3 }
+		{ "name": "tocino", "points": 3 },
+		{ "name": "champorado", "points": 3 },
 	  ]
 	},
 	"maalat": {
@@ -33,6 +29,7 @@
 	  "dishes": [
 		{ "name": "adobong manok", "points": 3 },
 		{ "name": "adobong baboy", "points": 3 },
+		{ "name": "pancit canton", "points": 3 },
 	  ]
 	},
 	"maasim": {
@@ -41,18 +38,14 @@
 		{ "name": "sinigang na baboy", "points": 3 },
 		{ "name": "sinigang na hipon", "points": 3 },
 		{ "name": "sinigang na isda", "points": 3 },
-		{ "name": "paksiw na isda", "points": 3 }
 	  ]
 	},
 	"agahan": {
 	  "name": "Agahan",
 	  "dishes": [
 		{ "name": "tapsilog", "points": 3 },
-		{ "name": "tocilog", "points": 3 },
-		{ "name": "longsilog", "points": 3 },
 		{ "name": "arroz caldo", "points": 3 },
 		{ "name": "champorado", "points": 2 },
-		{ "name": "tuyosilog", "points": 3 }
 	  ]
 	},
 	"pulutan": {
@@ -69,11 +62,7 @@
 		{ "name": "pinakbet", "points": 3 },
 		{ "name": "ginataang kalabasa", "points": 3 },
 		{ "name": "lumpiang sariwa", "points": 3 },
-		{ "name": "ginisang sitaw", "points": 2 },
 		{ "name": "nilagang baboy", "points": 2 },
-		{ "name": "ginisang monggo", "points": 3 },
-		{ "name": "ginisang ampalaya", "points": 3 },
-		{ "name": "pesa na isda", "points": 2 }
 	  ]
 	},
 	"handaan": {
@@ -81,11 +70,7 @@
 	  "dishes": [
 		{ "name": "lechon kawali", "points": 3 },
 		{ "name": "lumpiang shanghai", "points": 3 },
-		{ "name": "pancit canton", "points": 3 },
 		{ "name": "kare kare", "points": 3 },
-		{ "name": "kaldereta", "points": 3 },
-		{ "name": "barbeque", "points": 3 },
-		{ "name": "crispy pata", "points": 3 }
 	  ]
 	}
   },

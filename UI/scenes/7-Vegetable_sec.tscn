@@ -12,9 +12,6 @@ script = ExtResource("2_2dplf")
 offset_bottom = 6179.0
 texture = ExtResource("2_rnwky")
 
-[node name="menuB" parent="bg" index="2"]
-scale = Vector2(0.202287, 0.202287)
-
 [node name="MarginContainer" type="MarginContainer" parent="." index="1"]
 clip_contents = true
 layout_direction = 1
@@ -30,6 +27,3 @@ clip_contents = true
 custom_minimum_size = Vector2(150, 0)
 layout_direction = 0
 layout_mode = 2
-
-[node name="TurnLabel" parent="." index="4"]
-layout_mode = 0

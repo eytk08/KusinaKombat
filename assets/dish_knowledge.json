@@ -1,0 +1,374 @@
+{
+"dish_knowledge": {
+	"kare-kare": {
+		"meat": {
+			"essential": ["beef", "pork"],
+			"avoid": ["shrimp", "fish"]
+		},
+		"ingredients": {
+			"essential": ["peanut", "eggplant", "string beans", "shrimp paste"],
+			"tier1": ["banana flower", "pechay"],
+			"avoid": ["calamansi", "milk"]
+		},
+		"cooking_methods": {
+			"primary": ["stew"],
+			"secondary": ["boil"],
+			"incompatible": ["fry", "grill"]
+		}
+	},
+	"kaldereta": {
+		"meat": {
+			"essential": ["beef"],
+			"tier1": ["pork"],
+			"avoid": ["fish", "shrimp"]
+		},
+		"ingredients": {
+			"essential": ["tomato sauce", "potato", "carrot", "bell pepper"],
+			"tier1": ["bay leaves"],
+			"avoid": ["vinegar", "coconut milk"]
+		},
+		"cooking_methods": {
+			"primary": ["stew"],
+			"secondary": ["boil"],
+			"incompatible": ["fry", "steam", "grill"]
+		}
+	},
+	"bicol express": {
+		"meat": {
+			"essential": ["pork"],
+			"tier1": ["shrimp"],
+			"avoid": ["beef", "fish"]
+		},
+		"ingredients": {
+			"essential": ["coconut milk", "green chili pepper", "shrimp paste"],
+			"tier1": ["string beans", "eggplant"],
+			"avoid": ["vinegar", "soy sauce"]
+		},
+		"cooking_methods": {
+			"primary": ["stew"],
+			"secondary": ["boil"],
+			"incompatible": ["fry", "grill", "steam"]
+		}
+	},
+	"sisig": {
+		"meat": {
+			"essential": ["pork"],
+			"avoid": ["chicken", "fish"]
+		},
+		"ingredients": {
+			"essential": ["onion", "garlic", "ginger", "green chili pepper", "soy sauce", "calamansi", "black pepper"],
+			"tier1": ["egg"],
+			"avoid": ["sugar", "vinegar"]
+		},
+		"cooking_methods": {
+			"primary": ["fry"],
+			"secondary": ["grill"],
+			"incompatible": ["boil", "stew"]
+		}
+	},
+	"dinuguan": {
+		"meat": {
+			"essential": ["pork", "offal"],
+			"avoid": ["chicken", "fish"]
+		},
+		"ingredients": {
+			"essential": ["garlic", "vinegar", "ginger", "green chili pepper"],
+			"tier1": ["onion", "bay leaves"],
+			"avoid": ["soy sauce", "sugar"]
+		},
+		"cooking_methods": {
+			"primary": ["stew"],
+			"secondary": ["boil"],
+			"incompatible": ["fry", "grill"]
+		}
+	},
+	"hamonado": {
+		"meat": {
+			"essential": ["pork"],
+			"avoid": ["beef", "chicken"]
+		},
+		"ingredients": {
+			"essential": ["sugar", "soy sauce", "garlic", "onion", "black pepper"],
+			"tier1": ["bay leaves"],
+			"avoid": ["vinegar", "coconut milk"]
+		},
+		"cooking_methods": {
+			"primary": ["stew"],
+			"secondary": ["boil"],
+			"incompatible": ["fry", "grill"]
+		}
+	},
+	"tocino": {
+		"meat": {
+			"essential": ["pork"],
+			"avoid": ["beef", "chicken"]
+		},
+		"ingredients": {
+			"essential": ["sugar", "salt", "garlic"],
+			"tier1": [],
+			"avoid": ["vinegar", "soy sauce"]
+		},
+		"cooking_methods": {
+			"primary": ["fry"],
+			"secondary": ["grill"],
+			"incompatible": ["boil", "stew"]
+		}
+	},
+	"champorado": {
+		"meat": {
+			"essential": ["tuyo"],
+			"avoid": ["beef", "chicken"]
+		},
+		"ingredients": {
+			"essential": ["rice", "chocolate", "milk", "sugar"],
+			"tier1": [],
+			"avoid": ["salt", "vinegar"]
+		},
+		"cooking_methods": {
+			"primary": ["boil"],
+			"secondary": [],
+			"incompatible": ["fry", "grill"]
+		}
+	},
+	"adobong manok": {
+		"meat": {
+			"essential": ["chicken"],
+			"avoid": ["beef", "pork"]
+		},
+		"ingredients": {
+			"essential": ["soy sauce", "vinegar", "garlic", "bay leaves"],
+			"tier1": ["potato", "onion"],
+			"avoid": ["cheese", "milk"]
+		},
+		"cooking_methods": {
+			"primary": ["stew"],
+			"secondary": ["boil"],
+			"incompatible": ["fry", "grill"]
+		}
+	},
+	"adobong baboy": {
+		"meat": {
+			"essential": ["pork"],
+			"avoid": ["fish", "chicken"]
+		},
+		"ingredients": {
+			"essential": ["soy sauce", "vinegar", "garlic", "bay leaves"],
+			"tier1": ["potato", "onion"],
+			"avoid": ["cheese", "milk"]
+		},
+		"cooking_methods": {
+			"primary": ["stew"],
+			"secondary": ["boil"],
+			"incompatible": ["fry", "grill"]
+		}
+	},
+	"pancit canton": {
+		"meat": {
+			"essential": ["pork", "shrimp"],
+			"avoid": ["beef", "chicken"]
+		},
+		"ingredients": {
+			"essential": ["canton", "onion", "garlic", "carrot", "cabbage", "soy sauce"],
+			"tier1": ["bell pepper", "oyster sauce"],
+			"avoid": ["vinegar", "coconut milk"]
+		},
+		"cooking_methods": {
+			"primary": ["saute"],
+			"secondary": ["boil"],
+			"incompatible": ["stew"]
+		}
+	},
+	"sinigang na baboy": {
+		"meat": {
+			"essential": ["pork", "pork bone"],
+			"avoid": ["offal", "fish"]
+		},
+		"ingredients": {
+			"essential": ["tamarind", "radish"],
+			"tier1": ["tomato", "string beans", "okra"],
+			"avoid": ["milk", "peanut"]
+		},
+		"cooking_methods": {
+			"primary": ["boil"],
+			"secondary": ["stew"],
+			"incompatible": ["fry", "grill"]
+		}
+	},
+	"sinigang na hipon": {
+		"meat": {
+			"essential": ["shrimp"],
+			"avoid": ["pork", "beef"]
+		},
+		"ingredients": {
+			"essential": ["string beans", "tamarind", "okra", "green chili pepper", "radish", "tomato", "onion"],
+			"tier1": ["spinach"],
+			"avoid": ["soy sauce", "vinegar"]
+		},
+		"cooking_methods": {
+			"primary": ["boil"],
+			"secondary": ["stew"],
+			"incompatible": ["fry", "grill"]
+		}
+	},
+	"sinigang na isda": {
+		"meat": {
+			"essential": ["fish"],
+			"avoid": ["pork", "beef"]
+		},
+		"ingredients": {
+			"essential": ["string beans", "tamarind", "okra", "green chili pepper", "radish", "tomato", "onion"],
+			"tier1": ["spinach"],
+			"avoid": ["soy sauce", "vinegar"]
+		},
+		"cooking_methods": {
+			"primary": ["boil"],
+			"secondary": ["stew"],
+			"incompatible": ["fry", "grill"]
+		}
+	},
+	"tapsilog": {
+		"meat": {
+			"essential": ["beef"],
+			"avoid": ["pork", "chicken"]
+		},
+		"ingredients": {
+			"essential": ["egg", "garlic", "rice", "salt", "oil"],
+			"tier1": ["onion", "soy sauce"],
+			"avoid": ["vinegar", "sugar"]
+		},
+		"cooking_methods": {
+			"primary": ["fry"],
+			"secondary": ["grill"],
+			"incompatible": ["boil", "stew"]
+		}
+	},
+	"arroz caldo": {
+		"meat": {
+			"essential": ["chicken"],
+			"avoid": ["pork", "beef"]
+		},
+		"ingredients": {
+			"essential": ["rice", "garlic", "onion", "ginger", "fish sauce"],
+			"tier1": [],
+			"avoid": ["vinegar", "soy sauce"]
+		},
+		"cooking_methods": {
+			"primary": ["boil"],
+			"secondary": ["stew"],
+			"incompatible": ["fry", "grill"]
+		}
+	},
+	"lechon kawali": {
+		"meat": {
+			"essential": ["pork"],
+			"avoid": ["shrimp", "fish"]
+		},
+		"ingredients": {
+			"essential": ["salt", "black pepper", "oil"],
+			"tier1": ["garlic", "bay leaves"],
+			"avoid": ["sugar", "vinegar"]
+		},
+		"cooking_methods": {
+			"primary": ["fry"],
+			"secondary": ["boil"],
+			"incompatible": ["stew"]
+		}
+	},
+	"crispy pata": {
+		"meat": {
+			"essential": ["pork"],
+			"avoid": ["chicken", "fish"]
+		},
+		"ingredients": {
+			"essential": ["bay leaves", "salt", "black pepper"],
+			"tier1": ["garlic", "onion"],
+			"avoid": ["sugar", "vinegar"]
+		},
+		"cooking_methods": {
+			"primary": ["fry"],
+			"secondary": ["boil"],
+			"incompatible": ["stew"]
+		}
+	},
+	"pinakbet": {
+		"meat": {
+			"essential": ["shrimp", "pork"],
+			"avoid": ["beef", "chicken"]
+		},
+		"ingredients": {
+			"essential": ["string beans", "bitter gourd", "eggplant", "sweet potato", "tomato", "ginger", "onion", "garlic", "shrimp paste"],
+			"tier1": ["coconut milk", "fish sauce"],
+			"avoid": ["soy sauce", "vinegar"]
+		},
+		"cooking_methods": {
+			"primary": ["stew"],
+			"secondary": ["saute"],
+			"incompatible": ["fry", "grill"]
+		}
+	},
+	"ginataang kalabasa": {
+		"meat": {
+			"essential": ["pork", "chicken", "shrimp"],
+			"avoid": ["beef"]
+		},
+		"ingredients": {
+			"essential": ["sweet potato", "string beans", "coconut milk", "onion", "ginger", "garlic", "black pepper", "fish sauce"],
+			"tier1": ["green chili pepper", "moringga"],
+			"avoid": ["soy sauce", "vinegar"]
+		},
+		"cooking_methods": {
+			"primary": ["stew"],
+			"secondary": ["boil"],
+			"incompatible": ["fry", "grill"]
+		}
+	},
+	"lumpiang sariwa": {
+		"meat": {
+			"essential": ["pork", "shrimp"],
+			"avoid": ["beef", "chicken"]
+		},
+		"ingredients": {
+			"essential": ["sweet potato", "cabbage", "carrot", "onion", "garlic", "wrapper"],
+			"tier1": ["peanut"],
+			"avoid": ["vinegar", "chili"]
+		},
+		"cooking_methods": {
+			"primary": ["steam"],
+			"secondary": ["saute"],
+			"incompatible": ["fry", "stew"]
+		}
+	},
+	"lumpiang shanghai": {
+		"meat": {
+			"essential": ["pork"],
+			"avoid": ["beef", "chicken"]
+		},
+		"ingredients": {
+			"essential": ["wrapper", "oil", "pork", "onion", "carrot", "garlic", "black pepper", "salt"],
+			"tier1": ["radish"],
+			"avoid": ["soy sauce", "vinegar"]
+		},
+		"cooking_methods": {
+			"primary": ["fry"],
+			"secondary": [],
+			"incompatible": ["boil", "stew"]
+		}
+	},
+	"barbeque": {
+		"meat": {
+			"essential": ["pork"],
+			"avoid": ["beef", "chicken"]
+		},
+		"ingredients": {
+			"essential": ["soy sauce", "calamansi", "garlic", "black pepper", "sugar", "salt"],
+			"tier1": ["banana ketchup"],
+			"avoid": ["vinegar", "coconut milk"]
+		},
+		"cooking_methods": {
+			"primary": ["grill"],
+			"secondary": ["fry"],
+			"incompatible": ["boil", "stew"]
+		}
+	}
+}
+}

@@ -93,6 +93,7 @@ offset_bottom = 40.0
 [node name="Timer" type="Timer" parent="."]
 
 [node name="TurnLabel" type="Label" parent="."]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 

@@ -12,9 +12,6 @@ script = ExtResource("2_3oei4")
 texture = ExtResource("2_qxbxj")
 expand_mode = 1
 
-[node name="menuB" parent="bg" index="2"]
-scale = Vector2(0.202287, 0.202287)
-
 [node name="MarginContainer" type="MarginContainer" parent="." index="1"]
 layout_mode = 0
 offset_left = 231.0

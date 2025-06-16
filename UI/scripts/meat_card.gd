@@ -4,7 +4,7 @@ extends Control
 @onready var card_placeholder = $MarginContainer/UiCardPlaceholder
 @onready var ai_agent = preload("res://UI/scripts/AI_AGENT.gd").new()  
 @onready var turn_timer = $Timer
-@onready var turn_label = $bg/TurnLabel
+@onready var turn_label = $TurnLabel
 @onready var user_info_panel = $bg/USER_INFO
 @onready var ai_info_panel = $bg/AI_INFO
 @onready var user_label = $bg/USER_INFO/user_Label
@@ -19,6 +19,8 @@ var current_selection: String = ""
 var all_meat_cards: Array = [] 
 var player_score_counter := 8
 var ai_score_counter := 8
+var max_cards_per_player := 2  # Each player picks 2 cards
+var total_cards_selected := 0  # Tracks all picks (player + AI)
 
 func _ready():
 	add_child(card_manager)
@@ -89,32 +91,44 @@ func process_turn_end():
 	if is_player_turn and current_selection != "":
 		player_selected_cards.append(current_selection)
 		Globals.player_meat_cards = player_selected_cards.duplicate()
+		total_cards_selected += 1
 	elif not is_player_turn:
-		Globals.ai_meat_cards = ai_selected_cards.duplicate()
-	
-	current_selection = ""
-	
-	# Check if game should end (after at least 1 card each)
-	if player_selected_cards.size() + ai_selected_cards.size() >= 2:
+		total_cards_selected += 1  
+
+	current_selection = ""  # Reset selection
+
+	# End game after 4 cards (2 per player)
+	if total_cards_selected >= max_cards_per_player * 2:
 		end_game()
 	else:
+		# Switch turns
 		is_player_turn = !is_player_turn
-		start_turn()
+		if is_player_turn:
+			start_turn()  # Player's turn
+		else:
+			await get_tree().create_timer(1.0).timeout  # AI "thinking" delay
+			ai_turn()     # AI picks 1 card
+			# Don't call process_turn_end() here - let the timer or next input trigger it
+			start_turn()  # Start the next turn instead
 
 func ai_turn():
-	if available_cards.is_empty():
-		return
-	
+	if available_cards.is_empty() or ai_selected_cards.size() >= max_cards_per_player:
+		return  # Stop if no cards left or AI already picked 2
+
 	var ai_selection = ai_agent.select_card()
 	ai_selected_cards.append(ai_selection)
+	Globals.ai_meat_cards = ai_selected_cards.duplicate()
 	available_cards.erase(ai_selection)
-	
-		# Update AI score
+
+	# Update UI
 	ai_score_counter -= 1
 	ai_label.text = str(ai_score_counter)
-	
-	display_cards(all_meat_cards)  # Show all cards but only available ones will be visible
-	
+
+	# Disable the selected card
+	var selected_button = card_placeholder.get_selected_button(ai_selection)
+	if selected_button:
+		selected_button.disabled = true
+		selected_button.modulate = Color(0.5, 0.5, 0.5, 0.7)  # Gray out
 	
 func end_game():
 	var player_score = calculate_score(player_selected_cards)
@@ -129,11 +143,12 @@ func end_game():
 	}
 	
 	await get_tree().create_timer(1.5).timeout
-	get_tree().change_scene_to_file("res://UI/scenes/cd_ingredients.tscn")
+	get_tree().change_scene_to_file("res://UI/scenes/7-Vegetable_sec.tscn")
 
 func calculate_score(selected_cards: Array) -> int:
 	var score = 0
-	var dish_data = ai_agent.dish_knowledge.get(selected_dish_data.get("id", ""), {}).get("meat", {})
+	var key = ai_agent._get_current_battle_key()
+	var dish_data = ai_agent.dish_knowledge.get(selected_dish_data.get("id", ""), {}).get(key, {})	
 	
 	for card in selected_cards:
 		var card_lower = card.to_lower()
@@ -153,28 +168,25 @@ func calculate_score(selected_cards: Array) -> int:
 	return score
 	
 func on_card_selected(card_texture: String):
-	if not is_player_turn:
-		return
-	
+	if not is_player_turn or player_selected_cards.size() >= max_cards_per_player:
+		return  # Ignore if not player's turn or already picked 2
+
 	current_selection = card_texture
 	available_cards.erase(card_texture)
 	ai_agent.update_player_cards(player_selected_cards + [card_texture])
-	
+
+	# Update UI
 	player_score_counter -= 1
 	user_label.text = str(player_score_counter)
-	# Update display - this will automatically hide the selected card
-	display_cards(all_meat_cards)
-	
-	# Optional: Add additional visual feedback
+
+	# Disable card
 	var selected_button = card_placeholder.get_selected_button(card_texture)
 	if selected_button:
-		#var tween = create_tween()
-		#tween.tween_property(selected_button, "modulate:a", 0.0, 0.3)
 		selected_button.disabled = true
+		selected_button.modulate = Color(0.5, 0.5, 0.5, 0.7)
 
-	
 	turn_timer.stop()
-	process_turn_end()
+	process_turn_end()  # Proceed to AI turn
 	
 func update_turn_ui():
 	if is_player_turn:
