@@ -12,6 +12,12 @@ script = ExtResource("2_2dplf")
 offset_bottom = 6179.0
 texture = ExtResource("2_rnwky")
 
+[node name="user_Label" parent="bg/USER_INFO" index="0"]
+text = "6"
+
+[node name="ai_label" parent="bg/AI_INFO" index="0"]
+text = "6"
+
 [node name="MarginContainer" type="MarginContainer" parent="." index="1"]
 clip_contents = true
 layout_direction = 1

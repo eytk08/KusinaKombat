@@ -28,7 +28,6 @@ func _ready():
 	# Initialize nodes
 	add_child(card_manager)
 	
-	# Load previous battle results
 	selected_dish_data = Globals.ingredients_battle_results.get("dish_data", {})
 	
 	# Setup signal connections

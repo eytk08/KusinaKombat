@@ -12,6 +12,12 @@ script = ExtResource("2_3oei4")
 texture = ExtResource("2_qxbxj")
 expand_mode = 1
 
+[node name="user_Label" parent="bg/USER_INFO" index="0"]
+text = "4"
+
+[node name="ai_label" parent="bg/AI_INFO" index="0"]
+text = "4"
+
 [node name="MarginContainer" type="MarginContainer" parent="." index="1"]
 layout_mode = 0
 offset_left = 231.0

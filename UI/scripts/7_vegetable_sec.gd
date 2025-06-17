@@ -27,7 +27,7 @@ func _ready():
 	card_placeholder.card_selected.connect(on_card_selected)
 	
 	var dataset := load_dataset()
-	var dish_name: String = Globals.selected_dish_name.strip_edges().to_lower()
+	var dish_name: String = Globals.selected_dish_name.strip_edges().to_lower().replace(" ", "_")
 
 	if dataset.has("dishes") and dataset["dishes"].has(dish_name):
 		selected_dish_data = dataset["dishes"][dish_name]
@@ -69,7 +69,7 @@ func display_cards(card_textures: Array):
 	card_placeholder.setup_with_textures(cards_to_show)
 	
 	for i in range(cards_to_show.size()):
-		print("🥕 Card %d: %s" % [i, cards_to_show[i]])  # Changed emoji for ingredients
+		print("🥕 Card %d: %s" % [i, cards_to_show[i]])  
 		
 func start_turn():
 	update_turn_ui()
