@@ -25,12 +25,14 @@ func get_ingredient_cards_for_dish(dish_data: Dictionary, total_cards: int = 21)
 	])
 	return all_cards
 
-# Helper function to get required ingredients (unchanged)
+# Helper function to get required ingredients 
 func _get_required_cards(dish_data: Dictionary) -> Array:
 	var required_cards := []
 	if dish_data.has("ingredients"):
 		for ingredient in dish_data["ingredients"]:
-			var texture_path = "res://assets/cards/ingredients/%s.png" % ingredient.to_lower().replace(" ", "_").strip_edges()
+			var cleaned_name = ingredient.to_lower().strip_edges()
+			cleaned_name = cleaned_name.replace(" ", "_").replace("-", "_")
+			var texture_path = "res://assets/cards/ingredients/%s.png" % cleaned_name
 			if ResourceLoader.exists(texture_path):
 				required_cards.append(texture_path)
 			else:

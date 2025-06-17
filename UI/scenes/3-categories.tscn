@@ -143,10 +143,6 @@ offset_bottom = 2605.0
 scale = Vector2(0.17399, 0.141095)
 texture = ExtResource("14_0qtes")
 
-[node name="DishSelect" parent="." instance=ExtResource("15_0qtes")]
-visible = false
-layout_mode = 1
-
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
 offset_left = 424.0
@@ -158,5 +154,9 @@ theme_override_font_sizes/font_size = 40
 text = "Lolo's Roulette"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="DishSelect" parent="." instance=ExtResource("15_0qtes")]
+visible = false
+layout_mode = 1
 
 [connection signal="dish_selected" from="." to="DishSelect" method="_on_categories_dish_selected"]

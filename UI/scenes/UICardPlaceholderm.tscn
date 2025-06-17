@@ -30,56 +30,72 @@ columns = 4
 
 [node name="Texturebutton1" type="TextureButton" parent="GridContainer"]
 clip_contents = true
+custom_minimum_size = Vector2(1500, 1500)
 layout_mode = 2
 texture_normal = ExtResource("2_neqxl")
 texture_disabled = ExtResource("2_neqxl")
+ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Texturebutton2" type="TextureButton" parent="GridContainer"]
 clip_contents = true
+custom_minimum_size = Vector2(1500, 1500)
 layout_mode = 2
 texture_normal = ExtResource("2_neqxl")
 texture_disabled = ExtResource("2_neqxl")
+ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Texturebutton3" type="TextureButton" parent="GridContainer"]
 clip_contents = true
+custom_minimum_size = Vector2(1500, 1500)
 layout_mode = 2
 texture_normal = ExtResource("2_neqxl")
 texture_disabled = ExtResource("2_neqxl")
+ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Texturebutton4" type="TextureButton" parent="GridContainer"]
 clip_contents = true
+custom_minimum_size = Vector2(1500, 1500)
 layout_mode = 2
 texture_normal = ExtResource("2_neqxl")
 texture_disabled = ExtResource("2_neqxl")
+ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Texturebutton5" type="TextureButton" parent="GridContainer"]
 clip_contents = true
+custom_minimum_size = Vector2(1500, 1500)
 layout_mode = 2
 texture_normal = ExtResource("2_neqxl")
 texture_disabled = ExtResource("2_neqxl")
+ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Texturebutton6" type="TextureButton" parent="GridContainer"]
 clip_contents = true
+custom_minimum_size = Vector2(1500, 1500)
 layout_mode = 2
 texture_normal = ExtResource("2_neqxl")
 texture_disabled = ExtResource("2_neqxl")
+ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Texturebutton7" type="TextureButton" parent="GridContainer"]
 clip_contents = true
+custom_minimum_size = Vector2(1500, 1500)
 layout_mode = 2
 texture_normal = ExtResource("2_neqxl")
 texture_disabled = ExtResource("2_neqxl")
+ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Texturebutton8" type="TextureButton" parent="GridContainer"]
 clip_contents = true
+custom_minimum_size = Vector2(1500, 1500)
 layout_mode = 2
 texture_normal = ExtResource("2_neqxl")
 texture_disabled = ExtResource("2_neqxl")
+ignore_texture_size = true
 stretch_mode = 0

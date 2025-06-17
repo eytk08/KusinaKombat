@@ -31,6 +31,7 @@ scale = Vector2(1.97683, 1.97683)
 texture = ExtResource("2_jwkqd")
 
 [node name="TextureRect2" type="TextureRect" parent="bahayBG"]
+layout_mode = 0
 offset_left = 3813.43
 offset_top = 246.028
 offset_right = 5628.43

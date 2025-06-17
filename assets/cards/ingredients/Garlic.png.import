@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chjl5t0yg2rth"
-path="res://.godot/imported/Garlic.png-a0dea35a3c5f31d1a1d7bfa6aa248f37.ctex"
+uid="uid://dk0j77b0omy8b"
+path="res://.godot/imported/garlic.png-0b76712532087ade11dd210c5e59f467.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/cards/ingredients/Garlic.png"
-dest_files=["res://.godot/imported/Garlic.png-a0dea35a3c5f31d1a1d7bfa6aa248f37.ctex"]
+source_file="res://assets/cards/ingredients/garlic.png"
+dest_files=["res://.godot/imported/garlic.png-0b76712532087ade11dd210c5e59f467.ctex"]
 
 [params]
 

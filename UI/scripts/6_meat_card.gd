@@ -27,7 +27,7 @@ func _ready():
 	card_placeholder.card_selected.connect(on_card_selected)
 	
 	var dataset := load_dataset()
-	var dish_name: String = Globals.selected_dish_name.strip_edges().to_lower()
+	var dish_name: String = Globals.selected_dish_name.strip_edges().to_lower().replace(" ", "_")
 
 	if dataset.has("dishes") and dataset["dishes"].has(dish_name):
 		selected_dish_data = dataset["dishes"][dish_name]
@@ -125,25 +125,40 @@ func process_turn_end():
 		process_turn_end()
 
 
-
 func ai_turn():
 	if available_cards.is_empty() or ai_selected_cards.size() >= max_cards_per_player:
-		return  # Stop if no cards left or AI already picked 2
+		return
 
-	var ai_selection = ai_agent.select_card(available_cards)
+	var already_picked = ai_selected_cards + player_selected_cards
+	var selectable_cards = available_cards.filter(func(card):
+		return !already_picked.has(card)
+	)
+
+	if selectable_cards.is_empty():
+		print("⚠️ No selectable cards left for AI.")
+		return
+		
+	ai_agent.update_player_cards(player_selected_cards)
+
+	var ai_selection = ai_agent.select_card(selectable_cards)
+	if ai_selection == "":
+		print("⚠️ AI failed to select a valid card.")
+		return
+
 	ai_selected_cards.append(ai_selection)
-	Globals.ai_meat_cards = ai_selected_cards.duplicate()
 	available_cards.erase(ai_selection)
 
 	# Update UI
 	ai_score_counter -= 1
 	ai_label.text = str(ai_score_counter)
 
-	# Disable the selected card
+	# Disable and gray out selected card
 	var selected_button = card_placeholder.get_selected_button(ai_selection)
 	if selected_button:
 		selected_button.disabled = true
-		selected_button.modulate = Color(0.5, 0.5, 0.5, 0.7)  # Gray out
+		selected_button.modulate = Color(0.5, 0.5, 0.5, 0.7)
+
+	print("🤖 AI selected:", ai_selection)
 	
 func end_game():
 	var player_score = calculate_score(player_selected_cards)
@@ -162,24 +177,19 @@ func end_game():
 
 func calculate_score(selected_cards: Array) -> int:
 	var score = 0
-	var key = ai_agent._get_current_battle_key()
-	var dish_data = ai_agent.dish_knowledge.get(selected_dish_data.get("id", ""), {}).get(key, {})	
+	var meat_data = selected_dish_data.get("meat_preferences", {})
 	
 	for card in selected_cards:
-		var card_lower = card.to_lower()
+		var meat_name = card.get_file().replace(".png", "").to_lower()
 		
-		for ingredient in dish_data.get("essential", []):
-			if ingredient.to_lower() in card_lower:
-				score += 4
-		
-		for item in dish_data.get("tier1", []):
-			if item.to_lower() in card_lower:
-				score += 3
-		
-		for item in dish_data.get("tier2", []):
-			if item.to_lower() in card_lower:
-				score += 1
-	
+		# Check against dish's preferred meats
+		if meat_data.get("primary", []).has(meat_name):
+			score += 4  # Best meat for this dish
+		elif meat_data.get("secondary", []).has(meat_name):
+			score += 2  # Good alternative
+		else:
+			score += 1  # Neutral meat
+			
 	return score
 	
 func on_card_selected(card_texture: String):
@@ -188,20 +198,33 @@ func on_card_selected(card_texture: String):
 
 	current_selection = card_texture
 	available_cards.erase(card_texture)
-	ai_agent.update_player_cards(player_selected_cards + [card_texture])
+
+	# ✅ Immediately update player card list
+	player_selected_cards.append(card_texture)
+	Globals.player_meat_cards = player_selected_cards.duplicate()
+	total_cards_selected += 1
+
+	# Update AI agent BEFORE it runs its turn
+	ai_agent.update_player_cards(player_selected_cards)
 
 	# Update UI
 	player_score_counter -= 1
 	user_label.text = str(player_score_counter)
 
-	# Disable card
+	# Disable card visually
 	var selected_button = card_placeholder.get_selected_button(card_texture)
 	if selected_button:
 		selected_button.disabled = true
 		selected_button.modulate = Color(0.5, 0.5, 0.5, 0.7)
 
 	turn_timer.stop()
-	process_turn_end()  # Proceed to AI turn
+	is_player_turn = false
+	update_turn_ui()
+
+	await get_tree().create_timer(0.6).timeout
+	ai_turn()
+	await get_tree().create_timer(0.5).timeout
+	process_turn_end()
 	
 func update_turn_ui():
 	if is_player_turn:

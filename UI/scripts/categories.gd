@@ -4,9 +4,10 @@ extends Node
 @export var selection_speed: float = 0.2
 @export var speed_decrease_rate: float = 0.005
 @export var final_selection_delay: float = 0.1
-@export var cycles: int = 1
+@export var cycles: int = 3
 
 signal dish_selected(dish_name: String, dish_data: Dictionary)
+
 
 var elements: Array[TextureRect] = []
 var current_index: int = 0
@@ -109,20 +110,39 @@ func _next_selection():
 	
 	get_tree().create_timer(delay).timeout.connect(_next_selection)
 
+var blink_timer := Timer.new()
+var blink_state := false
+var final_element: Node = null
+
 func stop_roulette_at(index: int):
 	is_selecting = false
-	
+
 	# Reset all selections
 	for element in elements:
 		element.material.set_shader_parameter("selected", false)
-	
-	# Highlight final theme
-	var final_element = elements[index]
-	final_element.material.set_shader_parameter("selected", true)
+
+	# Highlight final theme and store it
+	final_element = elements[index]
 	selected_theme = final_element.name.to_lower()
-	
-	# Select random dish
+
+	# Setup and start blinking
+	blink_state = false
+	blink_timer.wait_time = 0.25
+	blink_timer.one_shot = false
+	blink_timer.timeout.connect(_on_blink_timer_timeout)
+	add_child(blink_timer)
+	blink_timer.start()
+
+	# Schedule to stop blinking after 2 seconds and continue
+	await get_tree().create_timer(2.0).timeout
+	blink_timer.stop()
+	final_element.material.set_shader_parameter("selected", true)  # Ensure it's lit after blinking
 	select_random_dish_from_theme()
+
+func _on_blink_timer_timeout():
+	if final_element:
+		blink_state = !blink_state
+		final_element.material.set_shader_parameter("selected", blink_state)
 
 func select_random_dish_from_theme():
 	var theme_data = game_data.themes.get(selected_theme, {})

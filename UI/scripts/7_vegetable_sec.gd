@@ -74,9 +74,9 @@ func display_cards(card_textures: Array):
 func start_turn():
 	update_turn_ui()
 	if is_player_turn:
-		turn_label.text = "Your Turn (6s)"
+		turn_label.text = "Your Turn "
 	else:
-		turn_label.text = "AI's Turn (6s)"
+		turn_label.text = "AI's Turn "
 		ai_turn()
 	
 	turn_timer.start()
@@ -93,17 +93,19 @@ func process_turn_end():
 			player_selected_cards.append(current_selection)
 			Globals.player_ingredient_cards = player_selected_cards.duplicate()  # Changed to ingredients
 			total_cards_selected += 1
-			print("🧍 Player selected:", current_selection)
+			print("🧍 Player selected:" + current_selection.get_file())
 		else:
 			print("⚠️ Player made no selection. Skipping.")
 	else:
 		total_cards_selected += 1
 
 	current_selection = ""
+	var player_card_names = player_selected_cards.map(func(c): return c.get_file())
+	var ai_card_names = ai_selected_cards.map(func(c): return c.get_file())
 
-	print("🔄 Turn End: Total cards selected =", total_cards_selected)
-	print("🧍‍♂️ Player cards:", player_selected_cards)
-	print("🤖 AI cards:", ai_selected_cards)
+	print("🔄 Turn End: Total cards selected = %d" % total_cards_selected)
+	print("🧍‍♂️ Player cards:" + str(player_card_names))
+	print("🤖 AI cards:" + str(ai_card_names))
 
 	if total_cards_selected >= max_cards_per_player * 2:  # Now checks for 6 total selections
 		print("✅ All ingredients cards selected. Ending game...")
@@ -131,6 +133,7 @@ func ai_turn():
 	ai_selected_cards.append(ai_selection)
 	Globals.ai_ingredient_cards = ai_selected_cards.duplicate()  # Changed to ingredients
 	available_cards.erase(ai_selection)
+	
 
 	# Update UI
 	ai_score_counter -= 1
@@ -149,8 +152,8 @@ func end_game():
 	Globals.ingredients_battle_results = {  # Changed to ingredients
 		"player_score": player_score,
 		"ai_score": ai_score,
-		"player_cards": player_selected_cards,
-		"ai_cards": ai_selected_cards,
+		"player_cards": player_selected_cards.map(func(c): return c.get_file()),
+		"ai_cards": ai_selected_cards.map(func(c): return c.get_file()),
 		"dish_data": selected_dish_data 
 	}
 	
@@ -161,20 +164,20 @@ func calculate_score(selected_cards: Array) -> int:
 	var score = 0
 	var key = ai_agent._get_current_battle_key()
 	var dish_data = ai_agent.dish_knowledge.get(selected_dish_data.get("id", ""), {}).get(key, {})	
-	
+
 	for card in selected_cards:
-		var card_lower = card.to_lower()
+		var card_normalized = card.to_lower().replace(".png", "").replace("_", " ").strip_edges()
 		
 		for ingredient in dish_data.get("essential", []):
-			if ingredient.to_lower() in card_lower:
+			if card_normalized == ingredient.to_lower():
 				score += 4
 		
 		for item in dish_data.get("tier1", []):
-			if item.to_lower() in card_lower:
+			if card_normalized == item.to_lower():
 				score += 3
 		
 		for item in dish_data.get("tier2", []):
-			if item.to_lower() in card_lower:
+			if card_normalized == item.to_lower():
 				score += 1
 	
 	return score

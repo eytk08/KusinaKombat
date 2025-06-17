@@ -4,13 +4,15 @@ enum BATTLE_TYPE {MEAT, INGREDIENTS, COOKING}
 
 # Dish knowledge database
 var dish_knowledge: Dictionary = {}
+var dish_data: Dictionary = {}
 
 var available_cards: Array = []
 var difficulty: int = 3
 var player_selected_cards: Array = []
 var selected_dish_id: String = ""
 var current_battle_type: int = BATTLE_TYPE.MEAT
-
+var selected_cards: Array = []
+var player_cards: Array = []
 
 func _ready():
 	load_dish_knowledge()
@@ -29,46 +31,67 @@ func load_dish_knowledge():
 
 # Initialize with battle type
 func initialize(dish_data: Dictionary, cards: Array, type: int, player_cards: Array = []):
+	self.dish_data = dish_data  # ✅ This fixes future .get("meat") or .get("ingredients")
 	selected_dish_id = dish_data.get("id", "")
 	available_cards = cards.duplicate()
 	player_selected_cards = player_cards.duplicate()
 	current_battle_type = type
 
-func select_card(available_cards: Array) -> String:
-	if available_cards.is_empty():
+func select_card(selectable_cards: Array) -> String:
+	if selectable_cards.is_empty():
 		return ""
 
-	var card_scores = _score_all_cards()
+	var selected_name: String
+	match current_battle_type:
+		BATTLE_TYPE.MEAT:
+			selected_name = select_from_priority(selectable_cards, dish_knowledge.get(selected_dish_id, {}).get("meat", {}))
+		BATTLE_TYPE.INGREDIENTS:
+			selected_name = select_from_priority(selectable_cards, dish_knowledge.get(selected_dish_id, {}).get("ingredients", {}))
+		BATTLE_TYPE.COOKING:
+			selected_name = select_from_priority(selectable_cards, dish_knowledge.get(selected_dish_id, {}).get("cooking_methods", {}))
+		
+		_:
+			selected_name = selectable_cards[randi() % selectable_cards.size()]  # fallback for other types
 
-	# Sort cards by score (highest first)
-	card_scores.sort_custom(func(a, b): return a["score"] > b["score"])
+	return selected_name
 
-	# Difficulty affects decision making
-	var pick_optimal = randf() < (0.5 + difficulty * 0.2)
 
-	if pick_optimal and card_scores.size() > 0 and card_scores[0]["score"] > -50:
-		return card_scores[0]["card"]
-	elif card_scores.size() > 0:
-		# Random selection from top 3 cards
-		var top_candidates = card_scores.slice(0, min(3, card_scores.size()))
-		if top_candidates.size() > 0:
-			return top_candidates[randi() % top_candidates.size()]["card"]
+func select_from_priority(selectable_cards: Array, category_data: Dictionary) -> String:
+	var priority_items = category_data.get("essential", []) + category_data.get("tier1", [])
+	var avoid_items = category_data.get("avoid", [])
 
-	# Fallback to random selection if all else fails
-	return available_cards[randi() % available_cards.size()]
+	# Try to select from essential and tier1
+	var preferred = selectable_cards.filter(func(card):
+		var item_name = card.get_file().replace(".png", "").to_lower()
+		return priority_items.has(item_name)
+	)
 
-func _score_all_cards() -> Array:
-	var player_missing_essential = _is_player_missing_essentials()
-	var card_scores = []
+	if preferred.size() > 0:
+		return preferred[randi() % preferred.size()]
 
-	for card in available_cards:
-		var score_data = {
-			"card": card,
-			"score": _score_card(card, player_missing_essential)
-		}
-		card_scores.append(score_data)
+	# Fallback: try to avoid avoid_items
+	var safe = selectable_cards.filter(func(card):
+		var item_name = card.get_file().replace(".png", "").to_lower()
+		return !avoid_items.has(item_name)
+	)
 
-	return card_scores
+	if safe.size() > 0:
+		return safe[randi() % safe.size()]
+
+	# Last fallback: anything
+	return selectable_cards[randi() % selectable_cards.size()]
+
+
+func _score_all_cards(card_list: Array) -> Array:
+	var scores = []
+	var missing_essential = _is_player_missing_essentials()
+
+	for card in card_list:
+		var score = _score_card(card, missing_essential)
+		scores.append({ "card": card, "score": score })
+		#print("Scoring card: ", card, " → ", score)
+
+	return scores
 
 func _get_current_battle_key() -> String:
 	match current_battle_type:
@@ -81,44 +104,43 @@ func _get_current_battle_key() -> String:
 		_:
 			return ""
 
-func _contains_word(text: String, word: String) -> bool:
-	var regex = RegEx.new()
-	regex.compile("\\b" + word.to_lower() + "\\b")
-	return regex.search(text.to_lower()) != null
+func _contains_word(card: String, word: String) -> bool:
+	var normalized_card := normalize_card_name(card)
+	var normalized_word := word.to_lower()
+	return normalized_card == normalized_word
 
 func _score_card(card: String, player_missing_essential: bool) -> int:
 	var score = 0
-	var card_lower = card.to_lower()
 	var dish_data = dish_knowledge.get(selected_dish_id, {}).get(_get_current_battle_key(), {})
 
-	# Essential ingredients scoring
-	for ingredient in dish_data.get("essential", []):
-		if _contains_word(card, ingredient):
-			score += 4  # Highest priority
+	# Early rejection for avoid-listed items
+	for avoid in dish_data.get("avoid", []):
+		if _contains_word(card, avoid):
+			return -9999
 
-	# Block player from getting essentials if they're missing
+	# Essential ingredients
+	for item in dish_data.get("essential", []):
+		if _contains_word(card, item):
+			score += 4
+
+	# Block bonus if player lacks essential
 	if player_missing_essential:
-		for ingredient in dish_data.get("essential", []):
-			if _contains_word(card, ingredient):
-				score += 2  # Blocking bonus
+		for item in dish_data.get("essential", []):
+			if _contains_word(card, item):
+				score += 2
 
-	# Tier1 ingredients
+	# Tier1
 	for item in dish_data.get("tier1", []):
 		if _contains_word(card, item):
 			score += 3
 
-	# Tier2 ingredients
+	# Tier2
 	for item in dish_data.get("tier2", []):
 		if _contains_word(card, item):
 			score += 1
 
-	# Avoid bad picks
-	for avoid in dish_data.get("avoid", []):
-		if _contains_word(card, avoid):
-			score -= 100  # Heavy penalty
-
-	# Small random variation
-	score += randi() % 3 - 1
+	# Small randomness
+	score += randi() % 3 - 1  # -1, 0, or +1
 
 	return score
 
@@ -126,19 +148,17 @@ func _is_player_missing_essentials() -> bool:
 	var dish_data = dish_knowledge.get(selected_dish_id, {}).get(_get_current_battle_key(), {})
 
 	for item in dish_data.get("essential", []):
-		var player_has = false
 		for card in player_selected_cards:
 			if _contains_word(card, item):
-				player_has = true
-				break
-
-		if not player_has:
-			return true
-
-	return false
+				return false
+	return true
 
 func remove_card(card_data: String):
 	available_cards.erase(card_data)
 
 func update_player_cards(new_cards: Array):
 	player_selected_cards = new_cards.duplicate()
+
+func normalize_card_name(card: String) -> String:
+	var base := card.get_file().get_basename()
+	return base.replace("_", " ").to_lower()

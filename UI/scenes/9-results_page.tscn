@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cc8se1kj8cvv0"]
+[gd_scene load_steps=7 format=3 uid="uid://cc8se1kj8cvv0"]
 
 [ext_resource type="Texture2D" uid="uid://b2ghat2d30yyq" path="res://assets/backgrounds/results_background.png" id="1_g5l2x"]
+[ext_resource type="Script" uid="uid://botkpf3vl1xej" path="res://UI/scripts/9_results_page.gd" id="1_h3v52"]
+[ext_resource type="FontFile" uid="uid://dvm3m0ux7d4n0" path="res://assets/elements/PixelifySans-Medium.ttf" id="1_q6fdr"]
 [ext_resource type="Texture2D" uid="uid://dx4l7tfav0ouc" path="res://assets/elements/frame.png" id="2_bwgik"]
 [ext_resource type="Texture2D" uid="uid://ds2pisknihvy4" path="res://assets/elements/lola_AI.png" id="3_k1jj6"]
-[ext_resource type="Texture2D" uid="uid://cdm5cd54we40p" path="res://assets/elements/continueB.png" id="4_c200s"]
 [ext_resource type="Texture2D" uid="uid://bukt7ehnp3fwr" path="res://assets/elements/homeB.png" id="5_nodi8"]
 
 [node name="ResultsPage" type="Control"]
@@ -13,6 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_h3v52")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -41,22 +43,37 @@ scale = Vector2(0.216796, 0.210449)
 texture = ExtResource("3_k1jj6")
 stretch_mode = 6
 
-[node name="TextureRect3" type="TextureRect" parent="."]
+[node name="TextureRect3" type="TextureButton" parent="."]
 layout_mode = 0
 offset_left = 548.0
 offset_top = 551.0
 offset_right = 2283.0
 offset_bottom = 1112.0
 scale = Vector2(0.168376, 0.163447)
-texture = ExtResource("4_c200s")
 stretch_mode = 3
 
-[node name="TextureRect4" type="TextureRect" parent="."]
+[node name="TextureRect4" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 224.0
-offset_top = 554.0
-offset_right = 1959.0
-offset_bottom = 1069.0
+offset_left = 440.0
+offset_top = 556.0
+offset_right = 2175.0
+offset_bottom = 1071.0
 scale = Vector2(0.168376, 0.163447)
-texture = ExtResource("5_nodi8")
+texture_normal = ExtResource("5_nodi8")
 stretch_mode = 3
+
+[node name="Label1" type="Label" parent="."]
+layout_mode = 0
+offset_left = 216.0
+offset_top = 198.0
+offset_right = 304.0
+offset_bottom = 318.0
+scale = Vector2(7.33545, 2.34639)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_q6fdr")
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 234
+clip_text = true
+text_overrun_behavior = 4
