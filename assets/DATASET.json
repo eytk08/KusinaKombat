@@ -2,14 +2,17 @@
   "themes": {
 	"masarsa": {
 	  "name": "Masarsa",
+	  "clue": "Malapot at malinamnam ang sarsa",
 	  "dishes": [
-		{ "name": "kare-kare", "points": 3 },
+		{ "name": "kare_kare", "points": 3 },
 		{ "name": "kaldereta", "points": 3 },
-		{ "name": "bicol_express", "points": 3 }
+		{ "name": "bicol_express", "points": 3 },
+		{ "name": "hamonado", "points": 2 }
 	  ]
 	},
 	"maanghang": {
 	  "name": "Maanghang",
+	  "clue": "May anghang na humahapdi at paborito ng mahilig sa sili",
 	  "dishes": [
 		{ "name": "sisig", "points": 3 },
 		{ "name": "kaldereta", "points": 2 },
@@ -18,58 +21,72 @@
 	},
 	"matamis": {
 	  "name": "Matamis",
+	  "clue": "Ulam o meryenda na may tamis mula sa asukal",
 	  "dishes": [
 		{ "name": "hamonado", "points": 3 },
 		{ "name": "tocino", "points": 3 },
-		{ "name": "champorado", "points": 3 }
+		{ "name": "champorado", "points": 3 },
+		{ "name": "barbeque", "points": 2 }
 	  ]
 	},
 	"maalat": {
 	  "name": "Maalat",
+	  "clue": "Malasa at maalat",
 	  "dishes": [
 		{ "name": "adobong_manok", "points": 3 },
 		{ "name": "adobong_baboy", "points": 3 },
-		{ "name": "pancit_canton", "points": 3 }
+		{ "name": "pancit_canton", "points": 3 },
+		{ "name": "tapsilog", "points": 2 }
 	  ]
 	},
 	"maasim": {
 	  "name": "Maasim",
+	  "clue": "May maasim na sabaw",
 	  "dishes": [
 		{ "name": "sinigang_na_baboy", "points": 3 },
 		{ "name": "sinigang_na_hipon", "points": 3 },
-		{ "name": "sinigang_na_isda", "points": 3 }
+		{ "name": "sinigang_na_isda", "points": 3 },
+		{ "name": "adobong_manok", "points": 2 }
 	  ]
 	},
 	"agahan": {
 	  "name": "Agahan",
+	  "clue": "Pampagising sa umaga",
 	  "dishes": [
 		{ "name": "tapsilog", "points": 3 },
 		{ "name": "arroz_caldo", "points": 3 },
-		{ "name": "champorado", "points": 2 }
+		{ "name": "champorado", "points": 2 },
+		{ "name": "tocino", "points": 2 }
 	  ]
 	},
 	"pulutan": {
 	  "name": "Pulutan",
+	  "clue": "Karaniwang pulutan tuwing inuman",
 	  "dishes": [
 		{ "name": "sisig", "points": 3 },
 		{ "name": "lechon_kawali", "points": 3 },
-		{ "name": "crispy_pata", "points": 3 }
+		{ "name": "crispy_pata", "points": 3 },
+		{ "name": "barbeque", "points": 2 }
 	  ]
 	},
 	"gulay": {
 	  "name": "Gulay",
+	  "clue": "Pampalusog na putaheng gulay",
 	  "dishes": [
 		{ "name": "pinakbet", "points": 3 },
 		{ "name": "ginataang_kalabasa", "points": 3 },
-		{ "name": "lumpiang_togue", "points": 3 }
+		{ "name": "lumpiang_togue", "points": 3 },
+		{ "name": "kare_kare", "points": 2 }
 	  ]
 	},
 	"handaan": {
 	  "name": "Handaan",
+	  "clue": "Putaheng karaniwang handa sa pista o espesyal na okasyon",
 	  "dishes": [
 		{ "name": "lechon_kawali", "points": 3 },
 		{ "name": "lumpiang_shanghai", "points": 3 },
-		{ "name": "kare_kare", "points": 3 }
+		{ "name": "kare_kare", "points": 3 },
+		{ "name": "kaldereta", "points": 2 }
 	  ]
 	}
   },
@@ -106,7 +123,7 @@
 	},
 	"champorado": {
 	  "ingredients": ["rice", "chocolate", "milk", "sugar", "salt", "oil", "coconut"],
-	  "meat": ["tuyo", "fish", "shrimp", "crab" ],
+	  "meat": ["tuyo", "fish", "shrimp", "crab"],
 	  "cooking_method": ["boil", "stew"]
 	},
 	"adobong_manok": {
@@ -165,7 +182,7 @@
 	  "cooking_method": ["stew", "saute"]
 	},
 	"ginataang_kalabasa": {
-	  "ingredients": ["sweet potato", "string beans", "coconut", "onion", "ginger", "garlic", "pepper", "fish sauce", "kalabasa", "green chili pepper", "moringga"],
+	  "ingredients": ["sweet potato", "string beans", "coconut milk", "onion", "ginger", "garlic", "pepper", "fish sauce", "kalabasa", "green chili pepper", "moringa"],
 	  "meat": ["pork", "chicken", "shrimp", "squid", "crab", "fish", "beef"],
 	  "cooking_method": ["stew", "boil"]
 	},
