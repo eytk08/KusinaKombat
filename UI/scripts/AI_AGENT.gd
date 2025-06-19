@@ -41,19 +41,17 @@ func select_card(selectable_cards: Array) -> String:
 	if selectable_cards.is_empty():
 		return ""
 
-	var selected_name: String
-	match current_battle_type:
-		BATTLE_TYPE.MEAT:
-			selected_name = select_from_priority(selectable_cards, dish_knowledge.get(selected_dish_id, {}).get("meat", {}))
-		BATTLE_TYPE.INGREDIENTS:
-			selected_name = select_from_priority(selectable_cards, dish_knowledge.get(selected_dish_id, {}).get("ingredients", {}))
-		BATTLE_TYPE.COOKING:
-			selected_name = select_from_priority(selectable_cards, dish_knowledge.get(selected_dish_id, {}).get("cooking_methods", {}))
-		
-		_:
-			selected_name = selectable_cards[randi() % selectable_cards.size()]  # fallback for other types
+	var scores = _score_all_cards(selectable_cards)
+	if scores.is_empty():
+		return ""
 
-	return selected_name
+	# Sort by descending score, return the top card
+	scores.sort_custom(func(a, b):
+		return b["score"] - a["score"]
+	)
+
+	return scores[0]["card"]
+
 
 
 func select_from_priority(selectable_cards: Array, category_data: Dictionary) -> String:
@@ -138,9 +136,6 @@ func _score_card(card: String, player_missing_essential: bool) -> int:
 	for item in dish_data.get("tier2", []):
 		if _contains_word(card, item):
 			score += 1
-
-	# Small randomness
-	score += randi() % 3 - 1  # -1, 0, or +1
 
 	return score
 
