@@ -29,9 +29,9 @@ func _ready():
 
 	var final_outcome := ""
 	if player_total > ai_total:
-		final_outcome = "🏆 Final Result: ✅ Player Wins Overall!"
+		final_outcome = "🏆 Final Result: Player Wins Overall!"
 	elif ai_total > player_total:
-		final_outcome = "🏆 Final Result: ❌ AI Wins Overall!"
+		final_outcome = "🏆 Final Result: AI Wins Overall!"
 	else:
 		final_outcome = "🏆 Final Result: 🤝 It's a Draw!"
 
@@ -91,31 +91,17 @@ func format_result(title: String, result_data: Dictionary) -> String:
 	var player_cards_raw = result_data.get("player_cards", [])
 	var ai_cards_raw = result_data.get("ai_cards", [])
 
-	var player_cards = []
-	for card in player_cards_raw:
-		var filename = card.get_file() if card is Resource else str(card)
-		var name = filename.get_file().get_basename().to_lower().replace(".png", "")
-		player_cards.append(name)
-
-	var ai_cards = []
-	for card in ai_cards_raw:
-		var filename = card.get_file() if card is Resource else str(card)
-		var name = filename.get_file().get_basename().to_lower().replace(".png", "")
-		ai_cards.append(name)
-
 	var outcome := ""
 	if player_score > ai_score:
-		outcome = "✅ Player Wins"
+		outcome = "You Win!"
 	elif ai_score > player_score:
-		outcome = "❌ AI Wins"
+		outcome = "You Lose!"
 	else:
-		outcome = "🤝 Draw"
+		outcome = "It's a Draw!"
 
-	return "%s:\nPlayer: %d vs AI: %d → %s\n🧍 Player Cards: %s\n🤖 AI Cards: %s\n" % [
+	return "%s:\nPlayer: %d vs AI: %d → %s" % [
 		title,
 		player_score,
 		ai_score,
-		outcome,
-		str(player_cards),
-		str(ai_cards)
+		outcome
 	]
