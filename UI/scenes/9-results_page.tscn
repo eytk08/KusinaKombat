@@ -52,7 +52,7 @@ offset_bottom = 1112.0
 scale = Vector2(0.168376, 0.163447)
 stretch_mode = 3
 
-[node name="TextureRect4" type="TextureButton" parent="."]
+[node name="HomeButton" type="TextureButton" parent="."]
 layout_mode = 0
 offset_left = 440.0
 offset_top = 556.0
@@ -64,16 +64,17 @@ stretch_mode = 3
 
 [node name="Label1" type="Label" parent="."]
 layout_mode = 0
-offset_left = 216.0
+offset_left = 242.0
 offset_top = 198.0
-offset_right = 304.0
+offset_right = 327.0
 offset_bottom = 318.0
 scale = Vector2(7.33545, 2.34639)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_q6fdr")
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 2
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 justification_flags = 234
 clip_text = true
 text_overrun_behavior = 4

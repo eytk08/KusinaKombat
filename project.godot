@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Kusina Kombat"
+run/main_scene="uid://dv0uo0rhdvgax"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -24,6 +25,10 @@ Dataset="*res://dataset.gd"
 
 window/size/viewport_height=700
 window/stretch/mode="viewport"
+
+[dotnet]
+
+project/assembly_name="Kusina Kombat"
 
 [rendering]
 

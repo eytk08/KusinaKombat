@@ -1,15 +1,26 @@
 extends Control
 
 @onready var label = $Label1
+@onready var home_button = $HomeButton
 
 func _ready():
-	var selected_dish = Globals.selected_dish_name.strip_edges().to_lower().replace("_", "-")
-	var knowledge = load_dish_knowledge()
+	home_button.pressed.connect(on_home_pressed)
 	
+	# Declare selected_dish and knowledge for debugging
+	var selected_dish = Globals.selected_dish_name.strip_edges().to_lower().replace(" ", "_")
+	print("🌐 Selected Dish Raw:", Globals.selected_dish_name)
+	print("🌐 Normalized Key:", selected_dish)
+
+	# Load the dish knowledge base
+	var knowledge = load_dish_knowledge()
+	print("📘 Available Dishes:", knowledge.keys())
+
 	if not knowledge.has(selected_dish):
-		label.text = "Selected dish not found in knowledge base." # For DEBUG
+		print("❌ Dish '%s' not found in knowledge base." % selected_dish)
+		label.text = "Selected dish not found in knowledge base."
 		return
 
+	# Continue with the rest of the game logic if dish is found
 	var meat_result = calculate_score(Globals.player_meat_cards, Globals.ai_meat_cards, knowledge[selected_dish]["meat"])
 	var ingredient_result = calculate_score(Globals.player_ingredient_cards, Globals.ai_ingredient_cards, knowledge[selected_dish]["ingredients"])
 	var cooking_result = calculate_score(Globals.player_cooking_cards, Globals.ai_cooking_cards, knowledge[selected_dish]["cooking_methods"])
@@ -23,21 +34,33 @@ func _ready():
 	result_text += "\n" + format_result("🧂 Ingredients Battle", ingredient_result)
 	result_text += "\n" + format_result("🍳 Cooking Battle", cooking_result)
 
-	# 🏆 Calculate and display overall winner
-	var player_total = meat_result.player + ingredient_result.player + cooking_result.player
-	var ai_total = meat_result.ai + ingredient_result.ai + cooking_result.ai
+	var player_avg = float(meat_result.player + ingredient_result.player + cooking_result.player) / 3.0
+	var ai_avg = float(meat_result.ai + ingredient_result.ai + cooking_result.ai) / 3.0
 
-	var final_outcome := ""
-	if player_total > ai_total:
-		final_outcome = "🏆 Final Result: ✅ Player Wins Overall!"
-	elif ai_total > player_total:
-		final_outcome = "🏆 Final Result: ❌ AI Wins Overall!"
+	player_avg = round(player_avg * 100) / 100.0
+	ai_avg = round(ai_avg * 100) / 100.0
+
+	var final_outcome := "\n📊 Final Average Score:\nPlayer: %.2f\nAI: %.2f\n" % [player_avg, ai_avg]
+	if player_avg > ai_avg:
+		final_outcome += "🏆 Final Result: ✅ Player Wins Overall!"
+	elif ai_avg > player_avg:
+		final_outcome += "🏆 Final Result: ❌ AI Wins Overall!"
 	else:
-		final_outcome = "🏆 Final Result: 🤝 It's a Draw!"
+		final_outcome += "🏆 Final Result: 🤝 It's a Draw!"
 
 	result_text += "\n\n" + final_outcome
 	label.text = result_text
 
+	# ✅ Log to console
+	print("============================")
+	print("📋 FINAL GAME RESULTS")
+	print("============================")
+	print(result_text)
+	print("============================")
+
+
+func on_home_pressed():
+	get_tree().change_scene_to_file("res://UI/scenes/1-title_screen.tscn")  # Update path if different\
 
 func load_dish_knowledge() -> Dictionary:
 	var file = FileAccess.open("res://assets/dish_knowledge.json", FileAccess.READ)
@@ -72,7 +95,6 @@ func calculate_score(player_cards: Array, ai_cards: Array, rules: Dictionary) ->
 		"ai_cards": ai_cards
 	}
 
-
 func get_score(cards: Array, rules: Dictionary, score_table: Dictionary) -> int:
 	var total = 0
 	for card in cards:
@@ -84,7 +106,6 @@ func get_score(cards: Array, rules: Dictionary, score_table: Dictionary) -> int:
 				break
 	return total
 
-
 func format_result(title: String, result_data: Dictionary) -> String:
 	var player_score = result_data.get("player", 0)
 	var ai_score = result_data.get("ai", 0)
@@ -94,14 +115,12 @@ func format_result(title: String, result_data: Dictionary) -> String:
 	var player_cards = []
 	for card in player_cards_raw:
 		var filename = card.get_file() if card is Resource else str(card)
-		var name = filename.get_file().get_basename().to_lower().replace(".png", "")
-		player_cards.append(name)
+		player_cards.append(filename.get_file().get_basename().to_lower())
 
 	var ai_cards = []
 	for card in ai_cards_raw:
 		var filename = card.get_file() if card is Resource else str(card)
-		var name = filename.get_file().get_basename().to_lower().replace(".png", "")
-		ai_cards.append(name)
+		ai_cards.append(filename.get_file().get_basename().to_lower())
 
 	var outcome := ""
 	if player_score > ai_score:

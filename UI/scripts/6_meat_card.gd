@@ -9,6 +9,9 @@ extends Control
 @onready var ai_info_panel = $bg/AI_INFO
 @onready var user_label = $bg/USER_INFO/user_Label
 @onready var ai_label = $bg/AI_INFO/ai_label
+@onready var skipbutton = $Button
+@onready var input_blocker = $InputBlocker
+
 
 var selected_dish_data: Dictionary
 var is_player_turn: bool = true
@@ -21,10 +24,34 @@ var player_score_counter := 8
 var ai_score_counter := 8
 var max_cards_per_player := 2  # Each player picks 2 cards
 var total_cards_selected := 0  # Tracks all picks (player + AI)
+var turn_duration := 6.0  # Seconds per turn
+var turn_time_left := 0.0
+
+func _process(delta):
+	if turn_timer.is_stopped():
+		return
+
+	turn_time_left -= delta
+	turn_time_left = max(turn_time_left, 0.0)
+
+	if is_player_turn:
+		turn_label.text = "Your Turn (%.0fs)" % turn_time_left
+		
+		if turn_time_left == 0:
+			print("⏰ Time is 0 — skipping to AI turn.")
+			turn_timer.stop()
+			current_selection = ""
+			player_score_counter -= 1
+			user_label.text = str(player_score_counter)
+			process_turn_end()
+
+	else:
+		turn_label.text = "AI's Turn (%.0fs)" % turn_time_left
 
 func _ready():
 	add_child(card_manager)
 	card_placeholder.card_selected.connect(on_card_selected)
+	skipbutton.pressed.connect(_on_skip_button_pressed)
 	
 	var dataset := load_dataset()
 	var dish_name: String = Globals.selected_dish_name.strip_edges().to_lower().replace(" ", "_")
@@ -71,46 +98,53 @@ func display_cards(card_textures: Array):
 	for i in range(cards_to_show.size()):
 		print("🃏 Card %d: %s" % [i, cards_to_show[i]])
 		
+
+
 func start_turn():
 	update_turn_ui()
-	if is_player_turn:
-		turn_label.text = "Your Turn (6s)"
-	else:
-		turn_label.text = "AI's Turn (6s)"
-		ai_turn()
-	
-	turn_timer.start()
+	turn_time_left = turn_duration
+	turn_timer.start(turn_duration)
 
 func _on_turn_timeout():
-	if is_player_turn and current_selection == "":
-		if available_cards.size() > 0:
-			on_card_selected(available_cards[0])
-	process_turn_end()
+	if is_player_turn:
+		print("⏰ Player ran out of time!")
+		player_score_counter -= 1
+		user_label.text = str(player_score_counter)
+
+		current_selection = ""  # No selection made
+		process_turn_end()      # <-- THIS is correct
+
+func _on_skip_button_pressed():
+	if is_player_turn:
+		print("⏭️ Player skipped the turn.")
+		turn_timer.stop()
+		current_selection = ""  # Force no selection
+		player_score_counter -= 1
+		user_label.text = str(player_score_counter)
+		process_turn_end()
+
 
 func process_turn_end():
 	if is_player_turn:
 		if current_selection != "":
 			player_selected_cards.append(current_selection)
-			Globals.player_meat_cards = player_selected_cards.duplicate()
 			total_cards_selected += 1
+			Globals.player_ingredient_cards = player_selected_cards.duplicate()
 			print("🧍 Player selected:", current_selection)
 		else:
 			print("⚠️ Player made no selection. Skipping.")
 	else:
-		total_cards_selected += 1  # AI already selected in ai_turn()
+		total_cards_selected += 1  # AI already selected during ai_turn()
 
-	current_selection = ""  # Always reset after processing
+	current_selection = ""
 
 	print("🔄 Turn End: Total cards selected =", total_cards_selected)
-	print("🧍‍♂️ Player cards:", player_selected_cards)
-	print("🤖 AI cards:", ai_selected_cards)
 
-	# End game
 	if total_cards_selected >= max_cards_per_player * 2:
-		print("✅ All cards selected. Ending game...")
 		end_game()
 		return
 
+	# 🚨 This part is critical
 	is_player_turn = !is_player_turn
 	update_turn_ui()
 
@@ -193,7 +227,7 @@ func calculate_score(selected_cards: Array) -> int:
 	return score
 	
 func on_card_selected(card_texture: String):
-	if not is_player_turn or player_selected_cards.size() >= max_cards_per_player:
+	if not is_player_turn or current_selection != "" or player_selected_cards.size() >= max_cards_per_player:
 		return  # Ignore if not player's turn or already picked 2
 
 	current_selection = card_texture
@@ -228,9 +262,10 @@ func on_card_selected(card_texture: String):
 	
 func update_turn_ui():
 	if is_player_turn:
-		user_info_panel.modulate = Color(1, 1, 1, 1)  # Fully visible
-		ai_info_panel.modulate = Color(0.6, 0.6, 0.6, 0.5)  # Dimmed
+		user_info_panel.modulate = Color(1, 1, 1, 1)
+		ai_info_panel.modulate = Color(0.6, 0.6, 0.6, 0.5)
+		input_blocker.visible = false
 	else:
-		user_info_panel.modulate = Color(0.6, 0.6, 0.6, 0.5)  # Dimmed
-		ai_info_panel.modulate = Color(1, 1, 1, 1)  # Fully visible
-	
+		user_info_panel.modulate = Color(0.6, 0.6, 0.6, 0.5)
+		ai_info_panel.modulate = Color(1, 1, 1, 1)
+		input_blocker.visible = true

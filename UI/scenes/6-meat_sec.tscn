@@ -24,3 +24,24 @@ scale = Vector2(0.952293, 0.910241)
 
 [node name="UiCardPlaceholder" parent="MarginContainer" index="0" instance=ExtResource("3_r2lrl")]
 layout_mode = 2
+
+[node name="Timer" parent="." index="3"]
+wait_time = 6.0
+one_shot = true
+
+[node name="Button" type="Button" parent="." index="5"]
+layout_mode = 0
+offset_left = 892.0
+offset_top = 601.0
+offset_right = 1137.0
+offset_bottom = 689.0
+text = "Skip"
+
+[node name="InputBlocker" type="ColorRect" parent="." index="6"]
+visible = false
+layout_mode = 0
+offset_left = 96.0
+offset_top = 136.0
+offset_right = 1030.0
+offset_bottom = 563.0
+color = Color(1, 1, 1, 0)

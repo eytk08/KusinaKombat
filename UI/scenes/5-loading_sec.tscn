@@ -39,5 +39,5 @@ vertical_alignment = 1
 script = ExtResource("3_v40v6")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 10.31
 autostart = true

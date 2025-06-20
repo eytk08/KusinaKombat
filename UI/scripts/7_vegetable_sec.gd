@@ -9,6 +9,8 @@ extends Control
 @onready var ai_info_panel = $bg/AI_INFO
 @onready var user_label = $bg/USER_INFO/user_Label
 @onready var ai_label = $bg/AI_INFO/ai_label
+@onready var skipbutton = $Button
+@onready var input_blocker = $InputBlocker
 
 var selected_dish_data: Dictionary
 var is_player_turn: bool = true
@@ -17,14 +19,17 @@ var ai_selected_cards: Array = []
 var available_cards: Array = []
 var current_selection: String = ""
 var all_ingredient_cards: Array = [] 
-var player_score_counter := 6  # Changed from 8 to 6 for ingredients
-var ai_score_counter := 6      # Changed from 8 to 6 for ingredients
-var max_cards_per_player := 3  # Changed from 2 to 3 (total 6 cards)
-var total_cards_selected := 0  # Tracks all picks (player + AI)
+var player_score_counter := 6
+var ai_score_counter := 6
+var max_cards_per_player := 3
+var total_cards_selected := 0
+var turn_duration := 6.0
+var turn_time_left := 0.0
 
 func _ready():
 	add_child(card_manager)
 	card_placeholder.card_selected.connect(on_card_selected)
+	skipbutton.pressed.connect(_on_skip_button_pressed)
 	
 	var dataset := load_dataset()
 	var dish_name: String = Globals.selected_dish_name.strip_edges().to_lower().replace(" ", "_")
@@ -35,12 +40,11 @@ func _ready():
 		printerr("❌ Dish not found in dataset: ", dish_name)
 		return
 
-	# Load and display ingredients cards instead of meat
 	all_ingredient_cards = card_manager.get_ingredient_cards_for_dish(selected_dish_data)
 	available_cards = all_ingredient_cards.duplicate()
 	display_cards(all_ingredient_cards)
 	
-	ai_agent.initialize(selected_dish_data, available_cards, ai_agent.BATTLE_TYPE.INGREDIENTS)  # Changed to ingredients
+	ai_agent.initialize(selected_dish_data, available_cards, ai_agent.BATTLE_TYPE.INGREDIENTS)
 	ai_agent.difficulty = 2
 	start_turn()
 	print("✅ Displaying ingredient cards for ", dish_name, ": ", all_ingredient_cards)
@@ -60,55 +64,61 @@ func load_dataset() -> Dictionary:
 	return {}
 
 func display_cards(card_textures: Array):
-	# Only show available cards
 	var cards_to_show = []
 	for card in card_textures:
 		if available_cards.has(card) or all_ingredient_cards.has(card):
 			cards_to_show.append(card)
-	
 	card_placeholder.setup_with_textures(cards_to_show)
-	
 	for i in range(cards_to_show.size()):
-		print("🥕 Card %d: %s" % [i, cards_to_show[i]])  
-		
+		print("🥕 Card %d: %s" % [i, cards_to_show[i]])
+
+func _process(delta):
+	if turn_timer.is_stopped():
+		return
+	turn_time_left -= delta
+	turn_time_left = max(turn_time_left, 0.0)
+
+	if is_player_turn:
+		turn_label.text = "Your Turn (%.0fs)" % turn_time_left
+		if turn_time_left == 0:
+			print("⏰ Time is 0 — skipping to AI turn.")
+			turn_timer.stop()
+			current_selection = ""
+			player_score_counter -= 1
+			user_label.text = str(player_score_counter)
+			process_turn_end()
+	else:
+		turn_label.text = "AI's Turn (%.0fs)" % turn_time_left
+
 func start_turn():
 	update_turn_ui()
-	if is_player_turn:
-		turn_label.text = "Your Turn "
-	else:
-		turn_label.text = "AI's Turn "
-		ai_turn()
-	
-	turn_timer.start()
+	turn_time_left = turn_duration
+	turn_timer.start(turn_duration)
 
-func _on_turn_timeout():
-	if is_player_turn and current_selection == "":
-		if available_cards.size() > 0:
-			on_card_selected(available_cards[0])
-	process_turn_end()
+func _on_skip_button_pressed():
+	if is_player_turn:
+		print("⏭️ Player skipped the turn.")
+		turn_timer.stop()
+		current_selection = ""
+		player_score_counter -= 1
+		user_label.text = str(player_score_counter)
+		process_turn_end()
 
 func process_turn_end():
 	if is_player_turn:
 		if current_selection != "":
 			player_selected_cards.append(current_selection)
-			Globals.player_ingredient_cards = player_selected_cards.duplicate()  # Changed to ingredients
-			total_cards_selected += 1
-			print("🧍 Player selected:" + current_selection.get_file())
+			Globals.player_ingredient_cards = player_selected_cards.duplicate()
+			print("🧍 Player selected:", current_selection)
 		else:
 			print("⚠️ Player made no selection. Skipping.")
 	else:
+		print("🤖 AI turn processed.")
 		total_cards_selected += 1
 
 	current_selection = ""
-	var player_card_names = player_selected_cards.map(func(c): return c.get_file())
-	var ai_card_names = ai_selected_cards.map(func(c): return c.get_file())
 
-	print("🔄 Turn End: Total cards selected = %d" % total_cards_selected)
-	print("🧍‍♂️ Player cards:" + str(player_card_names))
-	print("🤖 AI cards:" + str(ai_card_names))
-
-	if total_cards_selected >= max_cards_per_player * 2:  # Now checks for 6 total selections
-		print("✅ All ingredients cards selected. Ending game...")
+	if total_cards_selected >= max_cards_per_player * 2:
 		end_game()
 		return
 
@@ -129,36 +139,44 @@ func ai_turn():
 	if available_cards.is_empty() or ai_selected_cards.size() >= max_cards_per_player:
 		return
 
-	var ai_selection = ai_agent.select_card(available_cards)
-	ai_selected_cards.append(ai_selection)
-	Globals.ai_ingredient_cards = ai_selected_cards.duplicate()  # Changed to ingredients
-	available_cards.erase(ai_selection)
-	
+	var already_picked = ai_selected_cards + player_selected_cards
+	var selectable_cards = available_cards.filter(func(card): return !already_picked.has(card))
+	if selectable_cards.is_empty():
+		print("⚠️ No selectable cards left for AI.")
+		return
 
-	# Update UI
+	ai_agent.update_player_cards(player_selected_cards)
+	var ai_selection = ai_agent.select_card(selectable_cards)
+	if ai_selection == "":
+		print("⚠️ AI failed to select a valid card.")
+		return
+
+	ai_selected_cards.append(ai_selection)
+	Globals.ai_ingredient_cards = ai_selected_cards.duplicate()
+	available_cards.erase(ai_selection)
+
 	ai_score_counter -= 1
 	ai_label.text = str(ai_score_counter)
 
-	# Disable the selected card
 	var selected_button = card_placeholder.get_selected_button(ai_selection)
 	if selected_button:
 		selected_button.disabled = true
 		selected_button.modulate = Color(0.5, 0.5, 0.5, 0.7)
-	
+
+	print("🤖 AI selected:", ai_selection)
+
 func end_game():
 	var player_score = calculate_score(player_selected_cards)
 	var ai_score = calculate_score(ai_selected_cards)
-	
-	Globals.ingredients_battle_results = {  # Changed to ingredients
+	Globals.ingredients_battle_results = {
 		"player_score": player_score,
 		"ai_score": ai_score,
 		"player_cards": player_selected_cards.map(func(c): return c.get_file()),
 		"ai_cards": ai_selected_cards.map(func(c): return c.get_file()),
 		"dish_data": selected_dish_data 
 	}
-	
 	await get_tree().create_timer(1.5).timeout
-	get_tree().change_scene_to_file("res://UI/scenes/8-cooking_sec.tscn")  # Changed to next appropriate scene
+	get_tree().change_scene_to_file("res://UI/scenes/8-cooking_sec.tscn")
 
 func calculate_score(selected_cards: Array) -> int:
 	var score = 0
@@ -167,46 +185,49 @@ func calculate_score(selected_cards: Array) -> int:
 
 	for card in selected_cards:
 		var card_normalized = card.to_lower().replace(".png", "").replace("_", " ").strip_edges()
-		
-		for ingredient in dish_data.get("essential", []):
-			if card_normalized == ingredient.to_lower():
-				score += 4
-		
-		for item in dish_data.get("tier1", []):
-			if card_normalized == item.to_lower():
-				score += 3
-		
-		for item in dish_data.get("tier2", []):
-			if card_normalized == item.to_lower():
-				score += 1
-	
+		if dish_data.get("essential", []).has(card_normalized):
+			score += 4
+		elif dish_data.get("tier1", []).has(card_normalized):
+			score += 3
+		elif dish_data.get("tier2", []).has(card_normalized):
+			score += 1
 	return score
-	
+
 func on_card_selected(card_texture: String):
-	if not is_player_turn or player_selected_cards.size() >= max_cards_per_player:
+	if not is_player_turn or current_selection != "" or player_selected_cards.size() >= max_cards_per_player:
 		return
 
 	current_selection = card_texture
 	available_cards.erase(card_texture)
-	ai_agent.update_player_cards(player_selected_cards + [card_texture])
 
-	# Update UI
+	player_selected_cards.append(card_texture)
+	Globals.player_ingredient_cards = player_selected_cards.duplicate()
+	total_cards_selected += 1
+
+	ai_agent.update_player_cards(player_selected_cards)
+
 	player_score_counter -= 1
 	user_label.text = str(player_score_counter)
 
-	# Disable card
 	var selected_button = card_placeholder.get_selected_button(card_texture)
 	if selected_button:
 		selected_button.disabled = true
 		selected_button.modulate = Color(0.5, 0.5, 0.5, 0.7)
 
 	turn_timer.stop()
+	is_player_turn = false
+	update_turn_ui()
+	await get_tree().create_timer(0.6).timeout
+	ai_turn()
+	await get_tree().create_timer(0.5).timeout
 	process_turn_end()
-	
+
 func update_turn_ui():
 	if is_player_turn:
 		user_info_panel.modulate = Color(1, 1, 1, 1)
 		ai_info_panel.modulate = Color(0.6, 0.6, 0.6, 0.5)
+		input_blocker.visible = false
 	else:
 		user_info_panel.modulate = Color(0.6, 0.6, 0.6, 0.5)
 		ai_info_panel.modulate = Color(1, 1, 1, 1)
+		input_blocker.visible = true

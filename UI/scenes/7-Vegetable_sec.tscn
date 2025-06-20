@@ -33,3 +33,18 @@ clip_contents = true
 custom_minimum_size = Vector2(150, 0)
 layout_direction = 0
 layout_mode = 2
+
+[node name="Button" type="Button" parent="." index="5"]
+offset_left = 892.0
+offset_top = 601.0
+offset_right = 1137.0
+offset_bottom = 689.0
+text = "Skip"
+
+[node name="InputBlocker" type="ColorRect" parent="." index="6"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 87.0
+offset_right = 1126.0
+offset_bottom = 594.0
+color = Color(1, 1, 1, 0)
